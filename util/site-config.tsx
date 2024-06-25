@@ -1,7 +1,7 @@
 export const config = {
     title: 'CreatorMatch',
     description:
-        'Smart contract mediated proof of fund requests on Lisk with one click',
+        'Smart contract mediated proof of fund requests on Theta with one click',
     isLocal: process.env.NEXT_PUBLIC_ENV === 'development',
     about: [
         {

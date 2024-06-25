@@ -4,11 +4,11 @@
 
 ## CreatorMatch
 
-Mediated proof of fund requests managed by Lisk smart contracts with saved signatures of record.
+Mediated proof of fund requests managed by Theta smart contracts with saved signatures of record.
 
-Going for the Real world applications and finance category of https://lisk.devpost.com/
+Going for the Real world applications and finance category of https://theta.devpost.com/
 
-Live Demo url (deployed with Lisk Sepolia): https://creatormatchlisk.vercel.app
+Live Demo url (deployed with Theta Sepolia): https://creatormatchtheta.vercel.app
 
 Demo video (youtube ~3 minutes): https://youtu.be/G-mRl-ZpjXE
 
@@ -22,9 +22,9 @@ Example of this process in real estate: <a href="https://www.investopedia.com/as
 
 ### Example signed verification request
 
-Contract: https://sepolia-blockscout.lisk.com/address/0x9189c7722C0B815cd3752d559aD10980E20e59B4
+Contract: https://sepolia-blockscout.theta.com/address/0x9189c7722C0B815cd3752d559aD10980E20e59B4
 
-Signature page: https://creatormatchlisk.vercel.app/sign/0x9189c7722C0B815cd3752d559aD10980E20e59B4 (only viewable with designated recipient address).
+Signature page: https://creatormatchtheta.vercel.app/sign/0x9189c7722C0B815cd3752d559aD10980E20e59B4 (only viewable with designated recipient address).
 
 
 ### Example use case
@@ -48,7 +48,7 @@ When the verification is complete, a blockchain event is also emitted with infor
 
 <a href="https://gateway.lighthouse.storage/ipfs/QmeSUzMZSmUnj56WkriWwHjWqtJyarFX41EkPdscrQusuy">Example uploaded document</a>
 
-This app was deployed and supports Lisk Sepolia and Ethereum mainnet. Depending on the use case, the event fired from the contract when verification is completed can be used to trigger separate blockchain-specific workflows.
+This app was deployed and supports Theta Sepolia and Ethereum mainnet. Depending on the use case, the event fired from the contract when verification is completed can be used to trigger separate blockchain-specific workflows.
 
 ### How to run
 
