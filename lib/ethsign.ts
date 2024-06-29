@@ -10,7 +10,7 @@ import {
 import { privateKeyToAccount } from 'viem/accounts'
 import crypto from 'crypto'
 
-import { arbitrumSepolia, gnosisChiado } from 'viem/chains'
+import { arbitrumTestnet, gnosisChiado } from 'viem/chains'
 import { SchemaEntry } from './types'
 
 // https://docs.sign.global/developer-apis/index-1/npm-sdk#off-chain-arweave-mode

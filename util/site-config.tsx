@@ -1,40 +1,43 @@
 export const config = {
     title: 'CreatorMatch',
     description:
-        'Smart contract mediated proof of fund requests on Theta with one click',
+        'A smart contract mediated marketplace connecting creators with sponsors',
     isLocal: process.env.NEXT_PUBLIC_ENV === 'development',
+    admin: {
+        information: 'The admin page contains information for managing creator and sponsor interactions.'
+    },
     about: [
         {
             title: 'What is CreatorMatch?',
             description:
-                'CreatorMatch allows you to verify your balance without exposing unnecessary information to the requester.',
+                'CreatorMatch connects content creators with sponsors using Theta blockchain technology to ensure secure and transparent collaborations.',
         },
         {
             title: 'How does it work?',
             description:
-                'CreatorMatch lets you create balance verification links. For each request, the recipient can verify the request by proving ownership over a satisfying wallet.',
+                'Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and fund transfers, ensuring all parties meet their obligations.',
         },
         {
             title: 'Disclaimer',
             description:
-                'Note CreatorMatch is currently a proof of concept prototype and as provided as-is without any guarantees. Use at your own discretion.',
+                'CreatorMatch is currently a proof of concept prototype and is provided as-is without any guarantees. Use at your own discretion.',
         },
     ],
     steps: [
         {
             title: 'Create',
             description:
-                'Create a balance verification request. A shareable link is generated that you can send to the other party.',
+                'Creators post their project ideas, specifying the type of content and required sponsorship.',
         },
         {
-            title: 'Share',
+            title: 'Connect',
             description:
-                'Recipient accesses the verification link and connects with a known address. The recipient proves ownership and verifies that the funds belong to them.',
+                'Sponsors browse projects and connect with creators whose ideas they want to support. Agreements are managed through smart contracts.',
         },
         {
-            title: 'Verify',
+            title: 'Collaborate',
             description:
-                'Requester can review the completed verification event on the underlying smart contract.',
+                'Creators and sponsors collaborate to bring the project to life. Smart contracts ensure that funds are released only when agreed milestones are met.',
         },
     ],
 }
