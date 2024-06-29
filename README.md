@@ -1,5 +1,5 @@
 <p align='center'>
-    <img src='https://i.ibb.co/6m1MxJz/logo.png' width=400 />
+    <img src='https://i.ibb.co/yqZzy48/logo.png' width=400 />
 </p>
 
 ## CreatorMatch
