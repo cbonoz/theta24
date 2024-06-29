@@ -12,14 +12,14 @@ export const RouteButtons = () => {
                 className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
                 onClick={() => router.push('/upload')}
             >
-                Create balance request
+                Create video request
             </Button>
 
             <Button
                 className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
                 onClick={() => router.push('/sign')}
             >
-                Verify balance request
+                Find video request
             </Button>
         </div>
     )

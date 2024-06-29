@@ -44,7 +44,7 @@ const formSchema = z.object({
     recipientAddress: z.string().min(3, {
         message: 'Recipient address must be at least 3 characters.',
     }),
-    balance: z.string(),
+    video: z.string(),
     file: z.any().optional(),
     description: z.string().optional(),
 })
@@ -62,15 +62,15 @@ function UploadForm() {
     const signer = useEthersSigner({ chainId })
 
     const setDemoData = async () => {
-        form.setValue('title', 'Balance verification request')
+        form.setValue('title', 'Video listing request')
         form.setValue('description', getPlaceholderDescription())
         form.setValue('recipientName', 'John Doe')
         form.setValue(
             'recipientAddress',
             address || '0x1234567890123456789012345678901234567890'
         )
-        // balance
-        form.setValue('balance', '0.0001')
+        // video
+        form.setValue('video', '0.0001')
         form.setValue('file', null)
     }
 
@@ -78,7 +78,7 @@ function UploadForm() {
         form.setValue('title', '')
         form.setValue('description', '')
         form.setValue('recipientName', '')
-        form.setValue('balance', '0')
+        form.setValue('video', '0')
         form.setValue('recipientAddress', '')
         form.setValue('file', null)
     }
@@ -94,10 +94,10 @@ function UploadForm() {
         setError(null)
         try {
             const res: any = {}
-            let balance = parseFloat(values.balance)
-            if (isNaN(balance) || balance <= 0) {
+            let video = parseFloat(values.video)
+            if (isNaN(video) || video <= 0) {
                 throw new Error(
-                    'Balance must be a valid number greater than 0.'
+                    'Video must be a valid number greater than 0.'
                 )
             }
 
@@ -118,7 +118,7 @@ function UploadForm() {
                 signer,
                 title,
                 description || '',
-                balance,
+                video,
                 recipientName,
                 recipientAddress,
                 cid,
@@ -167,11 +167,11 @@ function UploadForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>
-                                        Enter fund request name
+                                        Enter video request name
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={`.1 ${currency} balance request verification`}
+                                            placeholder={`.1 ${currency} video request listing`}
                                             {...field}
                                         />
                                     </FormControl>
@@ -250,20 +250,20 @@ function UploadForm() {
 
                         <FormField
                             control={form.control}
-                            name="balance"
+                            name="video"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>
-                                        Required balance ({currency})
+                                        Required video ({currency})
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Required balance"
+                                            placeholder="Required video"
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        Required balance. Uses native{' '}
+                                        Required video. Uses native{' '}
                                         {currentChain?.name || 'chain'}
                                         &nbsp;currency.
                                     </FormDescription>
@@ -293,7 +293,7 @@ function UploadForm() {
                                     <FormDescription>
                                         Optional attachment for the receipient
                                         to download / access from the
-                                        verification page.
+                                        listing page.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

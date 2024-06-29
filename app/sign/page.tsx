@@ -14,7 +14,7 @@ const Sign = () => {
         <div className="flex flex-row items-center justify-center mt-8">
             <BasicCard
                 title="Find request"
-                description="Find and verify a fund request using your wallet."
+                description="Find and find a video request using your wallet."
                 className="min-w-[400px] p-4"
             >
                 <Input

@@ -1,7 +1,7 @@
 export interface RequestData {
     recipientName: string
     recipientAddress: string
-    balance: number
+    video: number
     name: string
     description: string
     files: string[]
@@ -12,7 +12,7 @@ export interface ContractMetadata {
     createdAt: number
     name: string
     description: string
-    balance: number
+    video: number
     recipientName: string
     recipientAddress: string
     cid?: string // optional cid pointer to attachment/s

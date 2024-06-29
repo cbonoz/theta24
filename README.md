@@ -16,7 +16,7 @@ Demo video (YouTube ~3 minutes): https://youtu.be/G-mRl-ZpjXE
 
 Connecting creators with sponsors can be challenging due to trust issues and the need for transparent, secure transactions. 
 
-With CreatorMatch, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that funds are securely managed, and milestones are met before payments are released.
+With CreatorMatch, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, and milestones are met before payments are released.
 
 ### Example smart contract interaction
 
@@ -33,8 +33,8 @@ Signature page: https://creatormatch.vercel.app/sign/0x9189c7722C0B815cd3752d559
 
 * **Sponsors:**
     * Browse through various creative projects and select ones to sponsor.
-    * Verify creator authenticity and project feasibility through smart contract interactions.
-    * Monitor project progress and release funds only when agreed milestones are met.
+    * Find creator authenticity and project feasibility through smart contract interactions.
+    * Monitor project progress and release videos only when agreed milestones are met.
 
 When a sponsorship request is created, a smart contract is deployed to manage the transaction. The address of the smart contract serves as a unique URL that can be shared with the sponsor. Only the intended recipient can validate and interact with the contract.
 
@@ -42,11 +42,11 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 
 ### Technologies used
 
-**Filecoin**: Used for secure file storage for additional project-related materials. When the other party visits the authenticated link, they can access the uploaded material securely. This is managed with Saturn and uses the Lighthouse web3 SDK for both upload and download based on the CID. Created CIDs are saved to the smart contracts and are retrieved when the verification page is accessed. The CID is only revealed to authorized parties (creator and sponsor).
+**Filecoin**: Used for secure file storage for additional project-related materials. When the other party visits the authenticated link, they can access the uploaded material securely. This is managed with Saturn and uses the Lighthouse web3 SDK for both upload and download based on the CID. Created CIDs are saved to the smart contracts and are retrieved when the listing page is accessed. The CID is only revealed to authorized parties (creator and sponsor).
 
 <a href="https://gateway.lighthouse.storage/ipfs/QmeSUzMZSmUnj56WkriWwHjWqtJyarFX41EkPdscrQusuy">Example uploaded document</a>
 
-This app was deployed and supports Theta Testnet and Ethereum mainnet. Depending on the use case, the event fired from the contract when verification is completed can be used to trigger separate blockchain-specific workflows.
+This app was deployed and supports Theta Testnet and Ethereum mainnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
 
 ### How to run
 
@@ -62,7 +62,7 @@ The app should now be running on port 3000.
 
 2. Install dependencies via yarn in the root folder. Run `npx hardhat compile` from `/creatorcontract`.
 
-3. Copy contents (includes ABI) to `metadata.tsx#FUND_CONTRACT`.
+3. Copy contents (includes ABI) to `metadata.tsx#VIDEO_CONTRACT`.
 
 4. Rebuild the web project. The app should now be using the updated contract code.
 
@@ -96,7 +96,7 @@ Demo video (YouTube ~3 minutes): https://youtu.be/G-mRl-ZpjXE
 
 Connecting creators with sponsors can be challenging due to trust issues and the need for transparent, secure transactions. 
 
-With CreatorMatch, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that funds are securely managed, and milestones are met before payments are released.
+With CreatorMatch, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, and milestones are met before payments are released.
 
 ### Example smart contract interaction
 
@@ -113,8 +113,8 @@ Signature page: https://creatormatch.vercel.app/sign/0x9189c7722C0B815cd3752d559
 
 * **Sponsors:**
     * Browse through various creative projects and select ones to sponsor.
-    * Verify creator authenticity and project feasibility through smart contract interactions.
-    * Monitor project progress and release funds only when agreed milestones are met.
+    * Find creator authenticity and project feasibility through smart contract interactions.
+    * Monitor project progress and release videos only when agreed milestones are met.
 
 When a sponsorship request is created, a smart contract is deployed to manage the transaction. The address of the smart contract serves as a unique URL that can be shared with the sponsor. Only the intended recipient can validate and interact with the contract.
 
@@ -122,11 +122,11 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 
 ### Technologies used
 
-**Filecoin**: Used for secure file storage for additional project-related materials. When the other party visits the authenticated link, they can access the uploaded material securely. This is managed with Saturn and uses the Lighthouse web3 SDK for both upload and download based on the CID. Created CIDs are saved to the smart contracts and are retrieved when the verification page is accessed. The CID is only revealed to authorized parties (creator and sponsor).
+**Filecoin**: Used for secure file storage for additional project-related materials. When the other party visits the authenticated link, they can access the uploaded material securely. This is managed with Saturn and uses the Lighthouse web3 SDK for both upload and download based on the CID. Created CIDs are saved to the smart contracts and are retrieved when the listing page is accessed. The CID is only revealed to authorized parties (creator and sponsor).
 
 <a href="https://gateway.lighthouse.storage/ipfs/QmeSUzMZSmUnj56WkriWwHjWqtJyarFX41EkPdscrQusuy">Example uploaded document</a>
 
-This app was deployed and supports Theta Testnet and Ethereum mainnet. Depending on the use case, the event fired from the contract when verification is completed can be used to trigger separate blockchain-specific workflows.
+This app was deployed and supports Theta Testnet and Ethereum mainnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
 
 ### How to run
 
@@ -142,7 +142,7 @@ The app should now be running on port 3000.
 
 2. Install dependencies via yarn in the root folder. Run `npx hardhat compile` from `/creatorcontract`.
 
-3. Copy contents (includes ABI) to `metadata.tsx#FUND_CONTRACT`.
+3. Copy contents (includes ABI) to `metadata.tsx#VIDEO_CONTRACT`.
 
 4. Rebuild the web project. The app should now be using the updated contract code.
 
@@ -174,7 +174,7 @@ The app should now be running on port 3000.
 
 ![Created](./img/created.png)
 
-## Insufficient balance error
+## Insufficient video error
 
 ![Error](./img/error.png)
 

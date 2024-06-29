@@ -1,4 +1,4 @@
-export const FUND_CONTRACT = {
+export const VIDEO_CONTRACT = {
     _format: 'hh-sol-artifact-1',
     contractName: 'CreatorContract',
     sourceName: 'contracts/CreatorContract.sol',
@@ -17,7 +17,7 @@ export const FUND_CONTRACT = {
                 },
                 {
                     internalType: 'uint256',
-                    name: '_balance',
+                    name: '_video',
                     type: 'uint256',
                 },
                 {
@@ -56,7 +56,7 @@ export const FUND_CONTRACT = {
                 {
                     indexed: false,
                     internalType: 'uint256',
-                    name: 'balance',
+                    name: 'video',
                     type: 'uint256',
                 },
                 {
@@ -66,7 +66,7 @@ export const FUND_CONTRACT = {
                     type: 'string',
                 },
             ],
-            name: 'FundVerified',
+            name: 'VideoVerified',
             type: 'event',
         },
         {
@@ -102,7 +102,7 @@ export const FUND_CONTRACT = {
                         },
                         {
                             internalType: 'uint256',
-                            name: 'balance',
+                            name: 'video',
                             type: 'uint256',
                         },
                         {
@@ -191,7 +191,7 @@ export const FUND_CONTRACT = {
                         },
                         {
                             internalType: 'uint256',
-                            name: 'balance',
+                            name: 'video',
                             type: 'uint256',
                         },
                         {

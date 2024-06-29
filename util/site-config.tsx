@@ -15,7 +15,7 @@ export const config = {
         {
             title: 'How does it work?',
             description:
-                'Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and fund transfers, ensuring all parties meet their obligations.',
+                'Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and video transfers, ensuring all parties meet their obligations.',
         },
         {
             title: 'Disclaimer',
@@ -37,7 +37,7 @@ export const config = {
         {
             title: 'Collaborate',
             description:
-                'Creators and sponsors collaborate to bring the project to life. Smart contracts ensure that funds are released only when agreed milestones are met.',
+                'Creators and sponsors collaborate to bring the project to life. Smart contracts ensure that videos are released only when agreed milestones are met.',
         },
     ],
 }

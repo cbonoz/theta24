@@ -1,4 +1,4 @@
-import { FUND_CONTRACT } from './metadata'
+import { VIDEO_CONTRACT } from './metadata'
 import { formatDate } from '../utils'
 import { ethers } from 'ethers'
 
@@ -14,8 +14,8 @@ export async function deployContract(
 ) {
     // Deploy contract with ethers
     const factory = new ethers.ContractFactory(
-        FUND_CONTRACT.abi,
-        FUND_CONTRACT.bytecode,
+        VIDEO_CONTRACT.abi,
+        VIDEO_CONTRACT.bytecode,
         signer
     )
 
@@ -23,13 +23,13 @@ export async function deployContract(
         return ethers.parseEther(amount + '')
     }
 
-    const balance = ethToWei(wei)
-    console.log('balance', balance, wei)
+    const video = ethToWei(wei)
+    console.log('video', video, wei)
 
     let contract: any = await factory.deploy(
         title,
         description,
-        balance,
+        video,
         recipientName,
         recipientAddress,
         cid,
@@ -40,7 +40,7 @@ export async function deployContract(
         'Deploying contract...',
         title,
         description,
-        balance,
+        video,
         recipientName,
         recipientAddress,
         cid,
@@ -53,7 +53,7 @@ export async function deployContract(
 }
 
 export const getMetadata = async (signer: any, address: string) => {
-    const contract = new ethers.Contract(address, FUND_CONTRACT.abi, signer)
+    const contract = new ethers.Contract(address, VIDEO_CONTRACT.abi, signer)
     const result = await (contract.getMetadata as any).call()
     console.log('result', result)
     return {
@@ -66,7 +66,7 @@ export const getMetadata = async (signer: any, address: string) => {
 }
 
 export const validate = async (signer: any, address: string, signature: string) => {
-    const contract = new ethers.Contract(address, FUND_CONTRACT.abi, signer)
+    const contract = new ethers.Contract(address, VIDEO_CONTRACT.abi, signer)
     const result = await contract.validate(signature)
     console.log('result', result)
     return {

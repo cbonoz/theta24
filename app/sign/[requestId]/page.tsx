@@ -4,14 +4,13 @@ import { config } from '@/app/config'
 import BasicCard from '@/components/basic-card'
 import RenderObject from '@/components/render-object'
 import { Button } from '@/components/ui/button'
-import { FUND_CONTRACT } from '@/lib/contract/metadata'
+import { VIDEO_CONTRACT } from '@/lib/contract/metadata'
 import { useEthersSigner } from '@/lib/get-signer'
 import { ContractMetadata, SchemaEntry } from '@/lib/types'
 import {
     abbreviate,
     formatCurrency,
     formatDate,
-    getAttestationUrl,
     getExplorerUrl,
     getIpfsUrl,
     transformMetadata,
@@ -32,7 +31,6 @@ import {
     useSwitchChain,
     useWriteContract,
 } from 'wagmi'
-import { SCHEMA_ID, createAttestation, getAttestation } from '@/lib/ethsign'
 
 const RESULT_KEYS = [
     'name',
@@ -48,7 +46,7 @@ interface Params {
     requestId: Address
 }
 
-export default function FundRequest({ params }: { params: Params }) {
+export default function VideoRequest({ params }: { params: Params }) {
     const [loading, setLoading] = useState(true)
     const [signLoading, setSignLoading] = useState(false)
     const [data, setData] = useState<ContractMetadata | undefined>()
@@ -78,12 +76,12 @@ export default function FundRequest({ params }: { params: Params }) {
             })
             let contractData: ContractMetadata = transformMetadata(
                 (await publicClient.readContract({
-                    abi: FUND_CONTRACT.abi,
+                    abi: VIDEO_CONTRACT.abi,
                     address: requestId,
                     functionName: 'getMetadata',
                 })) as ContractMetadata
             )
-            // convert balance and validatedAt to number from bigint
+            // convert video and validatedAt to number from bigint
             console.log('contractData', contractData)
             setData(contractData)
 
@@ -100,9 +98,9 @@ export default function FundRequest({ params }: { params: Params }) {
     }
 
     // https://wagmi.sh/react/guides/read-from-contract
-    // const { data: balance } = useReadContract({
+    // const { data: video } = useReadContract({
     //     ...wagmiContractConfig,
-    //     functionName: 'balanceOf',
+    //     functionName: 'videoOf',
     //     args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
     //   })
 
@@ -134,7 +132,7 @@ export default function FundRequest({ params }: { params: Params }) {
 
         try {
             const res = await writeContract(config, {
-                abi: FUND_CONTRACT.abi,
+                abi: VIDEO_CONTRACT.abi,
                 address: requestId,
                 functionName: 'validate',
                 args: [signature],
@@ -190,11 +188,11 @@ export default function FundRequest({ params }: { params: Params }) {
                 </span>
             )
         } else if (showSignRequest) {
-            return data?.name || 'Fund Request'
+            return data?.name || 'Video Request'
         } else if (error) {
-            return 'Error accessing Fund Request'
+            return 'Error accessing Video Request'
         }
-        return 'Fund Request'
+        return 'Video Request'
     }
 
     return (
@@ -202,7 +200,7 @@ export default function FundRequest({ params }: { params: Params }) {
         <div className="flex flex-col items-center justify-center mt-8">
             <BasicCard
                 title={getTitle()}
-                // description="Find and verify a fund request using your wallet."
+                // description="Find and find a video request using your wallet."
                 className="max-w-[1000px] p-4"
             >
                 {invalid && (
@@ -303,7 +301,7 @@ export default function FundRequest({ params }: { params: Params }) {
                                         Hey {data?.recipientName || 'there'},
                                     </div>
                                     <div className="mb-2">
-                                        You have a new proof of funds request!
+                                        You have a new proof of videos request!
                                     </div>
                                     <hr />
                                     <div className="my-4">
@@ -334,8 +332,8 @@ export default function FundRequest({ params }: { params: Params }) {
                                     Details
                                 </div>
                                 <div>
-                                    Balance to verify:&nbsp;
-                                    {formatCurrency(data.balance, currentChain)}
+                                    Video to find:&nbsp;
+                                    {formatCurrency(data.video, currentChain)}
                                 </div>
                                 <div>
                                     Request owner:&nbsp;
@@ -367,7 +365,7 @@ export default function FundRequest({ params }: { params: Params }) {
                             {signLoading && (
                                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                             )}
-                            Verify request
+                            Find request
                         </Button>
                     </div>
                 )}

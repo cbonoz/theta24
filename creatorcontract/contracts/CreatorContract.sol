@@ -9,7 +9,7 @@ contract CreatorContract {
         uint createdAt;
         string name;
         string description;
-        uint256 balance;
+        uint256 video;
         string recipientName;
         address recipientAddress;
         string cid; // optional cid pointer to attachment/s
@@ -22,13 +22,13 @@ contract CreatorContract {
     // metadata
     Metadata private metadata;
 
-    // Event to log balance verification
-    event FundVerified(address verifier, uint256 balance, string signature);
+    // Event to log video listing
+    event VideoVerified(address verifier, uint256 video, string signature);
 
     constructor(
         string memory _name,
         string memory _description,
-        uint256 _balance,
+        uint256 _video,
         string memory _recipientName,
         address _recipientAddress,
         string memory _cid,
@@ -42,7 +42,7 @@ contract CreatorContract {
             block.timestamp,
             _name,
             _description,
-            _balance,
+            _video,
             _recipientName,
             _recipientAddress,
             _cid,
@@ -57,24 +57,24 @@ contract CreatorContract {
     }
 
     function validate(string memory _signature) public returns (Metadata memory) {
-        // verify address
-        // get balance of sender
-        uint256 balance = address(msg.sender).balance;
-        uint256 targetBalance = metadata.balance;
+        // find address
+        // get video of sender
+        uint256 video = address(msg.sender).video;
+        uint256 targetVideo = metadata.video;
         // only the recipient address can validate
         require(
             msg.sender == metadata.recipientAddress,
-            "Only the intended recipient can validate their balance"
+            "Only the intended recipient can validate their video"
         );
-        // require at least balance of the metadata
-        require(balance >= targetBalance, "Balance is less than expected");
+        // require at least video of the metadata
+        require(video >= targetVideo, "Video is less than expected");
         // only validate once
-        require(metadata.validatedAt == 0, "Balance already validated");
+        require(metadata.validatedAt == 0, "Video already validated");
         // set validatedAt timestamp
         metadata.validatedAt = block.timestamp;
         metadata.signature = _signature;
         // emit event
-        emit FundVerified(msg.sender, balance, _signature);
+        emit VideoVerified(msg.sender, video, _signature);
         return metadata;
     }
 

@@ -1,10 +1,10 @@
 import { abbreviate } from '@/lib/utils'
 import {
     useAccount,
-    useBalance,
     useDisconnect,
     useEnsAvatar,
     useEnsName,
+    useBalance,
 } from 'wagmi'
 
 export function Account() {
@@ -22,7 +22,7 @@ export function Account() {
             {shortAddress && (
                 <span className="mx-2">
                     {ensName ? `${ensName} (${shortAddress})` : shortAddress}
-                    {/* {balance && ` - ${balance}} ETH`} */}&nbsp;(
+                    {/* {video && ` - ${video}} ETH`} */}&nbsp;(
                     <button
                         className="text-blue-500 underline"
                         onClick={() => disconnect()}

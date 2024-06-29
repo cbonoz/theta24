@@ -10,10 +10,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const isEmpty = (obj: any) => !obj || obj.length === 0
 
-export const getAttestationUrl = (attestationId: string) => {
-    return `https://scan.sign.global/attestation/${attestationId}`
-}
-
 export const abbreviate = (s: string | undefined, chars?: number) =>
     s ? `${s.substr(0, chars || 6)}**` : ''
 
@@ -51,11 +47,11 @@ export const getPlaceholderDescription = () => {
     const date = new Date(
         Date.now() + 7 * 24 * 60 * 60 * 1000
     ).toLocaleDateString()
-    return `This is to validate proof of funds to have your offer considered. See the attachment below, sign at your earliest convenience but this would be nice to have by ${date}.`
+    return `This is to validate proof of videos to have your offer considered. See the attachment below, sign at your earliest convenience but this would be nice to have by ${date}.`
 }
 
 export const transformMetadata = (contractData: ContractMetadata) => {
-    contractData.balance = Number(contractData.balance)
+    contractData.video = Number(contractData.video)
     contractData.validatedAt = Number(contractData.validatedAt) * 1000
     contractData.createdAt = Number(contractData.createdAt) * 1000
     return contractData
