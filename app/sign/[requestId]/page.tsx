@@ -4,7 +4,7 @@ import { config } from '@/app/config'
 import BasicCard from '@/components/basic-card'
 import RenderObject from '@/components/render-object'
 import { Button } from '@/components/ui/button'
-import { VIDEO_CONTRACT } from '@/lib/contract/metadata'
+import { CREATOR_CONTRACT } from '@/lib/contract/metadata'
 import { useEthersSigner } from '@/lib/get-signer'
 import { ContractMetadata, SchemaEntry } from '@/lib/types'
 import {
@@ -76,7 +76,7 @@ export default function VideoRequest({ params }: { params: Params }) {
             })
             let contractData: ContractMetadata = transformMetadata(
                 (await publicClient.readContract({
-                    abi: VIDEO_CONTRACT.abi,
+                    abi: CREATOR_CONTRACT.abi,
                     address: requestId,
                     functionName: 'getMetadata',
                 })) as ContractMetadata
@@ -132,7 +132,7 @@ export default function VideoRequest({ params }: { params: Params }) {
 
         try {
             const res = await writeContract(config, {
-                abi: VIDEO_CONTRACT.abi,
+                abi: CREATOR_CONTRACT.abi,
                 address: requestId,
                 functionName: 'validate',
                 args: [signature],
@@ -188,11 +188,11 @@ export default function VideoRequest({ params }: { params: Params }) {
                 </span>
             )
         } else if (showSignRequest) {
-            return data?.name || 'Video Request'
+            return data?.name || 'Creator page'
         } else if (error) {
-            return 'Error accessing Video Request'
+            return 'Error accessing Creator page'
         }
-        return 'Video Request'
+        return 'Creator page'
     }
 
     return (
@@ -200,7 +200,7 @@ export default function VideoRequest({ params }: { params: Params }) {
         <div className="flex flex-col items-center justify-center mt-8">
             <BasicCard
                 title={getTitle()}
-                // description="Find and find a video request using your wallet."
+                // description="Find and find a creator page using your wallet."
                 className="max-w-[1000px] p-4"
             >
                 {invalid && (

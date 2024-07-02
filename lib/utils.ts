@@ -79,8 +79,8 @@ export const getNameFromUser = (user: any) => {
     return `${user.firstName} ${user.lastName}`
 }
 
-export const signUrl = (address: string) =>
-    `${window.location.origin}/sign/${address}`
+export const creatorPageUrl = (address: string) =>
+    `${window.location.origin}/creator/${address}`
 
 export const termsUrl = () => `${window.location.origin}/terms`
 

@@ -1,10 +1,7 @@
-import { RequestData } from './types';
+import { CreatorPageData } from './types';
 
-export const DEMO_REQUEST: RequestData  = {
-    recipientName: 'Alice',
-    recipientAddress: '0x123',
-    video: 100,
-    name: 'Request',
-    description: 'This is a request',
-    files: ['file1', 'file2']
+export const DEMO_REQUEST: CreatorPageData  = {
+    handle: 'cb-videos',
+    name: 'CB productions',
+    description: 'This is a creator page',
 }

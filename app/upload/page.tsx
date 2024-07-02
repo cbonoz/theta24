@@ -1,5 +1,5 @@
 import BasicCard from '@/components/basic-card'
-import UploadForm from '@/components/request-upload-form'
+import CreatorForm from '@/components/creator-upload-form'
 import { config } from '@/util/site-config'
 
 const Upload = () => {
@@ -9,10 +9,10 @@ const Upload = () => {
             {/* make min width 400 */}
             <BasicCard
                 className="w-[600px] p-4"
-                title="Create new proof of video request"
-                description="Create a new video listing request. This item will become publicly available for other users to discover."
+                title="Create new creator page"
+                description="Create a new creator page. This item will become publicly available for other users to discover."
             >
-                <UploadForm />
+                <CreatorForm />
             </BasicCard>
 
             <div>

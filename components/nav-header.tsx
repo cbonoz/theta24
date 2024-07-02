@@ -19,11 +19,11 @@ const NavHeader = () => {
                     href="/upload"
                     className="text-gray-500 hover:underline mx-4"
                 >
-                    Create video request
+                    Create creator page
                 </a>
                 |
-                <a href="/sign" className="text-gray-500 hover:underline mx-4">
-                    Find video request
+                <a href="/creator" className="text-gray-500 hover:underline mx-4">
+                    Find creator page
                 </a>
                 |
                 <a href="/about" className="text-gray-500 hover:underline mx-4">

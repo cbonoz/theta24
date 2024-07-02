@@ -1,4 +1,4 @@
-import { VIDEO_CONTRACT } from './metadata'
+import { CREATOR_CONTRACT } from './metadata'
 import { formatDate } from '../utils'
 import { ethers } from 'ethers'
 
@@ -14,8 +14,8 @@ export async function deployContract(
 ) {
     // Deploy contract with ethers
     const factory = new ethers.ContractFactory(
-        VIDEO_CONTRACT.abi,
-        VIDEO_CONTRACT.bytecode,
+        CREATOR_CONTRACT.abi,
+        CREATOR_CONTRACT.bytecode,
         signer
     )
 
@@ -53,7 +53,7 @@ export async function deployContract(
 }
 
 export const getMetadata = async (signer: any, address: string) => {
-    const contract = new ethers.Contract(address, VIDEO_CONTRACT.abi, signer)
+    const contract = new ethers.Contract(address, CREATOR_CONTRACT.abi, signer)
     const result = await (contract.getMetadata as any).call()
     console.log('result', result)
     return {
@@ -66,7 +66,7 @@ export const getMetadata = async (signer: any, address: string) => {
 }
 
 export const validate = async (signer: any, address: string, signature: string) => {
-    const contract = new ethers.Contract(address, VIDEO_CONTRACT.abi, signer)
+    const contract = new ethers.Contract(address, CREATOR_CONTRACT.abi, signer)
     const result = await contract.validate(signature)
     console.log('result', result)
     return {

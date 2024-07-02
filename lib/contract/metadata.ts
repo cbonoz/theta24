@@ -1,4 +1,4 @@
-export const VIDEO_CONTRACT = {
+export const CREATOR_CONTRACT = {
     _format: 'hh-sol-artifact-1',
     contractName: 'CreatorContract',
     sourceName: 'contracts/CreatorContract.sol',

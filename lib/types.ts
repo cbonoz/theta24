@@ -1,10 +1,7 @@
-export interface RequestData {
-    recipientName: string
-    recipientAddress: string
-    video: number
+export interface CreatorPageData {
+    handle: string
     name: string
     description: string
-    files: string[]
 }
 
 export interface ContractMetadata {

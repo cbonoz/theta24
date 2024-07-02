@@ -12,14 +12,14 @@ export const RouteButtons = () => {
                 className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
                 onClick={() => router.push('/upload')}
             >
-                Create video request
+                Create creator page
             </Button>
 
             <Button
                 className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
                 onClick={() => router.push('/sign')}
             >
-                Find video request
+                Find creator page
             </Button>
         </div>
     )
