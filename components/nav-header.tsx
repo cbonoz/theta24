@@ -12,11 +12,11 @@ const NavHeader = () => {
                 <a href="/" className="block">
                     <img
                         src="/logo.png"
-                        alt="CreatorMatch Logo"
+                        alt="CreatorPage Logo"
                         className="h-8 w-auto fill-current"
                     />
                 </a>
-                {/* <span className="ml-4 text-xl font-bold">CreatorMatch</span> */}
+                {/* <span className="ml-4 text-xl font-bold">CreatorPage</span> */}
             </div>
             <nav className="flex">
                 <a

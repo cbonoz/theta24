@@ -2,13 +2,13 @@
     <img src='https://i.ibb.co/yqZzy48/logo.png' width=400 />
 </p>
 
-## CreatorMatch
+## CreatorPage
 
 A smart contract mediated marketplace connecting creators with sponsors/supporters, managed by Theta blockchain technology.
 
 Going for the Real world applications and finance category of https://theta2024.devpost.com/
 
-Live Demo URL (deployed with Theta Testnet): https://creatormatch.vercel.app
+Live Demo URL (deployed with Theta Testnet): https://creatorpage.vercel.app
 
 Demo video (YouTube ~3 minutes):
 
@@ -22,13 +22,13 @@ I wanted to create a system using Theta that enabled anyone to create their own 
 
 When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request.
 
-With CreatorMatch, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
+With CreatorPage, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
 
 ### Example creator page
 
 Contract: https://testnet-blockscout.theta.com/address/0x9189c7722C0B815cd3752d559aD10980E20e59B4
 
-Creator page: https://creatormatch.vercel.app/creator/0x9189c7722C0B815cd3752d559aD10980E20e59B4 (only viewable with designated recipient address).
+Creator page: https://creatorpage.vercel.app/creator/0x9189c7722C0B815cd3752d559aD10980E20e59B4 (only viewable with designated recipient address).
 
 ### Example use case
 
@@ -40,7 +40,7 @@ Creator page: https://creatormatch.vercel.app/creator/0x9189c7722C0B815cd3752d55
 * **Sponsors:**
     * Browse through various creator pages and select ones to sponsor.
     * Make a donation with a video request that gets displayed on the creator page.
-    * Creators can auto generate scripts for requests using CreatorMatch LLM.
+    * Creators can auto generate scripts for requests using CreatorPage LLM.
 
 When the sponsorship is completed, a blockchain event is emitted with information about the transaction. This event can be listened to on other networks or blockchain platforms (or for indexing on `the Graph`).
 

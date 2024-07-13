@@ -1,5 +1,5 @@
 {
-  "name": "creatormatch",
+  "name": "creatorpage",
   "version": "0.1.0",
   "private": false,
   "scripts": {
@@ -26,7 +26,6 @@
     "chai": "^4.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "embla-carousel-react": "^8.1.6",
     "ethers": "^6.12.0",
     "hardhat-gas-reporter": "^1.0.8",
     "lucide-react": "^0.363.0",

@@ -5,7 +5,7 @@ import RenderObject from '@/components/render-object';
 import { Button } from '@/components/ui/button';
 import { deployContract } from '@/lib/contract/deploy';
 import { useEthersSigner } from '@/lib/get-signer';
-import { isEmpty } from '@/lib/utils';
+import { getExplorerUrl, isEmpty } from '@/lib/utils';
 import { siteConfig } from '@/util/site-config';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import {useState, useEffect} from 'react';
@@ -14,7 +14,7 @@ import { useChainId, useChains } from 'wagmi';
 
 
 const AdminPage = () => {
-    const [contract, setContract] = useState<any>({});
+    const [contract, setContract] = useState<any>({address: '0xa203Fa36a88c7CEDf35f5D4dE296641e738138E8'});
     const [error, setError] = useState<any>(null);
     const [loading, setLoading] = useState(false);
 
@@ -69,8 +69,13 @@ const AdminPage = () => {
                 <div className='text-red-500'>{error}</div>}
 
             {contract?.address &&
-                <div>
-                    <RenderObject obj={contract as any} title="Master contract deployed" />
+                <div className='mt-4'>
+                    <div className=' text-green-500'>Master contract deployed at: {contract?.address}</div>
+                    <a href={getExplorerUrl(contract?.address, currentChain)} target="_blank" rel="noreferrer"
+className='text-blue-500 mt-4 block text-sm hover:underline'
+                    >
+                        View contract on {currentChain?.name} explorer
+                    </a>
                 </div>
             }
 

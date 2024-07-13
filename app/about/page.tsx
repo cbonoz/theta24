@@ -16,8 +16,8 @@ const About = () => {
     return (
         <div className="flex flex-col items-center justify-center mt-8">
             <BasicCard
-                title="About CreatorMatch"
-                description="Learn more about CreatorMatch and how it works."
+                title="About CreatorPage"
+                description="Learn more about CreatorPage and how it works."
                 className="min-w-[400px] p-4"
             >
                 {siteConfig.about.map((section, index) => (
