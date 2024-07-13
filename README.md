@@ -10,7 +10,7 @@ Going for the Real world applications and finance category of https://theta2024.
 
 Live Demo URL (deployed with Theta Testnet): https://creatormatch.vercel.app
 
-Demo video (YouTube ~3 minutes): 
+Demo video (YouTube ~3 minutes):
 
 ### Inspiration
 
@@ -34,11 +34,13 @@ Creator page: https://creatormatch.vercel.app/creator/0x9189c7722C0B815cd3752d55
 
 * **Creators:**
     * Post project ideas with their connected address to begin receiving video requests.
+    * Add existing videos in a portfolio carousel
     * Get a dedicated url with unique handle that can be shared on the creators existing social media accounts.
 
 * **Sponsors:**
     * Browse through various creator pages and select ones to sponsor.
-    * Find creator authenticity and project feasibility through smart contract interactions.
+    * Make a donation with a video request that gets displayed on the creator page.
+    * Creators can auto generate scripts for requests using CreatorMatch LLM.
 
 When the sponsorship is completed, a blockchain event is emitted with information about the transaction. This event can be listened to on other networks or blockchain platforms (or for indexing on `the Graph`).
 
@@ -49,6 +51,10 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 <!-- <a href="https://gateway.lighthouse.storage/ipfs/QmeSUzMZSmUnj56WkriWwHjWqtJyarFX41EkPdscrQusuy">Example uploaded document</a> -->
 
 This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
+
+**Theta Gemma 2B**;
+
+**Theta Video management API**:
 
 ### Updating the smart contract
 

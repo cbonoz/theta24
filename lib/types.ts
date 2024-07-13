@@ -4,28 +4,31 @@ export interface CreatorPageData {
     description: string
 }
 
+export interface VideoRequest {
+    handle: string;
+    donation: string;
+    message: string;
+}
+
+    // struct Metadata {
+    //     string handle;
+    //     string creatorName;
+    //     string creatorDescription;
+    //     string initialVideoUrls;
+    //     address creatorAddress;
+    //     VideoRequest[] requests;
+    //     bool active;
+    //     uint createdAt;
+    //     bool isValue;
+    // }
 export interface ContractMetadata {
-    owner: string
-    createdAt: number
-    name: string
-    description: string
-    video: number
-    recipientName: string
-    recipientAddress: string
-    cid?: string // optional cid pointer to attachment/s
-    validatedAt: number
-    signature: string
-    network: string
-}
-
-export interface SchemaItem {
-    name: string
-    type: string
-}
-
-export interface SchemaEntry {
-    name: string
-    request: string
-    timestamp: string
-    signature: string
+    handle: string
+    creatorName: string
+    creatorDescription: string
+    initialVideoUrls: string[]
+    creatorAddress: string
+    requests: VideoRequest[]
+    active: boolean
+    createdAt: string
+    isValue: boolean
 }

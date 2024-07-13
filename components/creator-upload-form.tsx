@@ -23,16 +23,10 @@ import {
   creatorPageUrl,
 } from "@/lib/utils";
 import Link from "next/link";
-import RenderObject from "./render-object";
 import { Textarea } from "./ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { uploadFile } from "@/lib/stor";
 import { useAccount, useChainId, useChains } from "wagmi";
-import { deployContract } from "@/lib/contract/deploy";
-import { config } from "@/app/config";
-import { useEthersSigner } from "@/lib/get-signer";
 import { Chain } from "viem";
-import { network } from "hardhat";
 
 const formSchema = z.object({
   handle: z.string().min(3, {
@@ -54,7 +48,6 @@ function CreatorForm() {
   const currentChain: Chain | undefined = (chains || []).find(
     (c) => c.id === chainId
   );
-  const signer = useEthersSigner({ chainId });
 
   const setDemoData = async () => {
     form.setValue("title", "CB Video productions");
