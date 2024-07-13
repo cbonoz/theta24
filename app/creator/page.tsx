@@ -13,12 +13,12 @@ const Sign = () => {
     return (
         <div className="flex flex-row items-center justify-center mt-8">
             <BasicCard
-                title="Find request"
+                title="Find creator"
                 description="Find and find a creator page using your wallet."
                 className="min-w-[400px] p-4"
             >
                 <Input
-                    placeholder="Enter request address"
+                    placeholder="Enter creator handle"
                     value={requestId}
                     onChange={(e) => setRequestId(e.target.value)}
                 />
@@ -26,11 +26,11 @@ const Sign = () => {
                 <Button
                     className="mt-4"
                     onClick={() => {
-                        console.log('Sign request')
+                        console.log('Go to creator')
                         router.push(`/creator/${requestId}`)
                     }}
                 >
-                    Go to request page
+                    Go to creator page
                 </Button>
             </BasicCard>
         </div>

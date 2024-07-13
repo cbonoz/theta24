@@ -1,5 +1,5 @@
 import { RouteButtons } from '@/components/route-buttons'
-import { config } from '@/util/site-config'
+import { siteConfig } from '@/util/site-config'
 import { Metadata } from 'next'
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
                 <img src="/logo.png" alt="creatormatch" className="my-4" />
                 <RouteButtons />
             </div>
-            <p className="text-lg pt-8">{config.description}.</p>
+            <p className="text-lg pt-8">{siteConfig.description}.</p>
         </main>
     )
 }

@@ -1,8 +1,9 @@
-export const config = {
+export const siteConfig = {
     title: 'CreatorMatch',
     description:
         'A smart contract mediated marketplace connecting creators with sponsors',
     isLocal: process.env.NEXT_PUBLIC_ENV === 'development',
+    masterAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x0',
     admin: {
         information: 'The admin page contains information for managing creator and sponsor interactions.'
     },

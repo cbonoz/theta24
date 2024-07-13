@@ -26,7 +26,13 @@ import Link from "next/link";
 import { Textarea } from "./ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useAccount, useChainId, useChains } from "wagmi";
-import { Chain } from "viem";
+import { Address, Chain, createPublicClient, http } from "viem";
+import { registerHandle } from '@/lib/contract/interact';
+import {config} from '@/app/config';
+import { useEthersSigner } from '@/lib/get-signer';
+import { writeContract } from 'viem/actions';
+import { CREATOR_CONTRACT } from '@/lib/contract/metadata';
+import { siteConfig } from '@/util/site-config';
 
 const formSchema = z.object({
   handle: z.string().min(3, {
@@ -36,6 +42,7 @@ const formSchema = z.object({
     message: "Creator name must be at least 3 characters.",
   }),
   description: z.string().optional(),
+  videoUrls: z.string().optional(),
 });
 
 function CreatorForm() {
@@ -49,16 +56,20 @@ function CreatorForm() {
     (c) => c.id === chainId
   );
 
+  const signer = useEthersSigner  ({ chainId });
+
   const setDemoData = async () => {
     form.setValue("title", "CB Video productions");
     form.setValue("handle", "cb-videos");
     form.setValue("description", getPlaceholderDescription());
+    form.setValue("videoUrls", "https://www.youtube.com/watch?v=6ZfuNTqbHE8")
   };
 
   const clearForm = () => {
     form.setValue("title", "");
     form.setValue("handle", "");
     form.setValue("description", "");
+    form.setValue("videoUrls", "");
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -68,6 +79,11 @@ function CreatorForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+      const { handle, title, description,videoUrls } = values;
+
+    console.log('values', values)
+
+
     setLoading(true);
     setError(null);
     try {
@@ -75,13 +91,25 @@ function CreatorForm() {
 
       // upload contract
 
-      const { title, description } = values;
+      const { title, description, videoUrls } = values;
 
-    //   const contractAddress = await deployContract(
-    //     signer,
-    //     title,
-    //     description || "",
-    //   );
+      // const registerResult = await registerHandle(
+      //   signer,
+      //   handle,
+      //   title,
+      //   description || '',
+      //   videoUrls || ''
+      // );
+
+      const registerResult = await writeContract(config, {
+        abi: CREATOR_CONTRACT.abi,
+        address: siteConfig.masterAddress as Address,
+        functionName: 'registerHandle',
+        args: [handle, title, description || '', videoUrls || ''],
+    })
+
+      console.log('registerResult', registerResult);
+
     let contractAddress = '0x123'
       res["contractAddress"] = contractAddress;
       res["contractUrl"] = getExplorerUrl(contractAddress, currentChain);

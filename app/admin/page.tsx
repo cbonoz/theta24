@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { deployContract } from '@/lib/contract/deploy';
 import { useEthersSigner } from '@/lib/get-signer';
 import { isEmpty } from '@/lib/utils';
+import { siteConfig } from '@/util/site-config';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import {useState, useEffect} from 'react';
 import { Chain } from 'viem';
@@ -46,11 +47,14 @@ const AdminPage = () => {
 
 
     return (
-        <div className='space-y-4'>
+        <div className="flex flex-row justify-center mt-8 max-w-[1000px]">
 
-        <BasicCard title="Deploy master contract">
-            <p>Deploy the master contract to the Theta blockchain.</p>
+        <BasicCard title={`Deploy ${siteConfig.title} master contract`} className='w-full justify-center'>
+{siteConfig.masterAddress && <p>Master contract address: {siteConfig.masterAddress}</p>
+}
+{!siteConfig.masterAddress && <p>Master contract address not set</p>}
 
+            <div className='text-md my-4'>Deploy the master contract to the Theta blockchain.</div>
 
             <Button onClick={deployMasterContract} disabled={loading}>
                 {loading &&
@@ -64,7 +68,7 @@ const AdminPage = () => {
 {error &&
                 <div className='text-red-500'>{error}</div>}
 
-            {!isEmpty(contract) &&
+            {contract?.address &&
                 <div>
                     <RenderObject obj={contract as any} title="Master contract deployed" />
                 </div>

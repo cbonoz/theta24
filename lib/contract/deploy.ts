@@ -2,9 +2,6 @@ import { CREATOR_CONTRACT } from './metadata'
 import { formatDate } from '../utils'
 import { ethers } from 'ethers'
 
-const ethToWei = (amount: any) => {
-    return ethers.parseEther(amount + '')
-}
 
 export async function deployContract(
     signer: any,
@@ -29,6 +26,6 @@ export async function deployContract(
     )
 
     contract = await contract.waitForDeployment()
-    console.log('deployed contract...', contract.target)
-    return contract.target
+    console.log('deployed contract...', JSON.stringify(contract))
+    return {'address': contract.target}
 }

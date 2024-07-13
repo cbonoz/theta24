@@ -8,6 +8,7 @@ export interface VideoRequest {
     handle: string;
     donation: string;
     message: string;
+    requester?: string;
 }
 
     // struct Metadata {

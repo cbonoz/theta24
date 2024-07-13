@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import { Chain } from 'viem'
 import { Config } from 'wagmi'
 import { ContractMetadata } from './types'
+import { ethers } from 'ethers'
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -43,11 +44,7 @@ export const getExplorerUrl = (
 }
 
 export const getPlaceholderDescription = () => {
-    // week from now
-    const date = new Date(
-        Date.now() + 7 * 24 * 60 * 60 * 1000
-    ).toLocaleDateString()
-    return `This is to validate proof of videos to have your offer considered. See the attachment below, sign at your earliest convenience but this would be nice to have by ${date}.`
+    return `I make funny videos for a living. I'm a creator on ${window.location.origin}.`
 }
 
 export const transformMetadata = (contractData: ContractMetadata) => {
@@ -108,4 +105,9 @@ export function capitalize(s: string) {
 
 export const getIpfsUrl = (cid: string) => {
     return `https://gateway.lighthouse.storage/ipfs/${cid}`
+}
+
+
+export const ethToWei = (amount: any) => {
+    return ethers.parseEther(amount + '')
 }

@@ -4,7 +4,7 @@ import BasicCard from '@/components/basic-card'
 import RenderObject from '@/components/render-object'
 import { Button } from '@/components/ui/button'
 import { useEthersSigner } from '@/lib/get-signer'
-import { config } from '@/util/site-config'
+import { siteConfig } from '@/util/site-config'
 import { useState } from 'react'
 
 const About = () => {
@@ -20,7 +20,7 @@ const About = () => {
                 description="Learn more about CreatorMatch and how it works."
                 className="min-w-[400px] p-4"
             >
-                {config.about.map((section, index) => (
+                {siteConfig.about.map((section, index) => (
                     <div key={index} className="mt-4">
                         <h3 className="text-lg font-bold">{section.title}</h3>
                         <p>{section.description}</p>
