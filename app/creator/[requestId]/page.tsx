@@ -183,12 +183,6 @@ export default function CreatorPage({ params }: { params: Params }) {
                     </div>
                 )}
 
-                {!authorized && (
-                    <div className="font-bold">
-                        <p>Not authorized to access this page</p>
-                    </div>
-                )}
-
                 {result && (
                     <div className="mt-4">
                         <h3 className="text-lg font-bold">Result</h3>

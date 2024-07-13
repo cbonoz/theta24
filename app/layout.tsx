@@ -10,7 +10,6 @@ import { cookieToInitialState } from 'wagmi'
 import { config } from './config'
 const inter = Inter({ subsets: ['latin'] })
 
-// {/* https://docs.saturn.tech/fetching-from-saturn#0fd2ebd8ca11499891917dde4c04fc91 */} */}
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -20,7 +19,6 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <Script async src="https://saturn.tech/widget.js" />
             <Providers initialState={initialState}>
                 <body className={inter.className}>
                     <NavHeader />

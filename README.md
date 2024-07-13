@@ -46,11 +46,7 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 
 ### Technologies used
 
-**Theta Metachain (testnet)**: Used for secure file storage for additional project-related materials. When the other party visits the authenticated link, they can access the uploaded material securely. This is managed with Saturn and uses the Lighthouse web3 SDK for both upload and download based on the CID. Created CIDs are saved to the smart contracts and are retrieved when the listing page is accessed. The CID is only revealed to authorized parties (creator and sponsor).
-
-<!-- <a href="https://gateway.lighthouse.storage/ipfs/QmeSUzMZSmUnj56WkriWwHjWqtJyarFX41EkPdscrQusuy">Example uploaded document</a> -->
-
-This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
+**Theta Metachain (testnet)**: This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
 
 **Theta Gemma 2B**;
 
@@ -74,7 +70,7 @@ The app should now be running on port 3000.
 
 3.  Go to localhost:3000/admin. Deploy a new instance of the `CreatorContract` - make a note of the deployed address.
 
-4. Update the contract address in `.env`
+4. Update the contract address from step (3) in `.env`. Restart the server.
 
 5. Rebuild and redeploy the project. The app should now be using the updated contract code with a new primary app contract address.
 

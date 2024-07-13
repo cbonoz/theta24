@@ -1,6 +1,6 @@
-import { defineChain } from "viem";
+import { Chain, defineChain } from "viem";
 
-export const thetaTestnet = /*#__PURE__*/ defineChain({
+export const thetaTestnet: Chain = /*#__PURE__*/ defineChain({
     id: 365,
     name: 'Theta Testnet',
     nativeCurrency: { name: 'TFuel', symbol: 'TFUEL', decimals: 18 },

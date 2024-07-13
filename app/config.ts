@@ -1,6 +1,6 @@
 import { thetaTestnet } from '@/util/theta-chain'
 import { createConfig, http, cookieStorage, createStorage } from 'wagmi'
-import { mainnet,  } from 'wagmi/chains'
+import { mainnet, } from 'wagmi/chains'
 
 export const config = createConfig({
     chains: [thetaTestnet],//, mainnet],
