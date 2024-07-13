@@ -7,6 +7,7 @@ contract CreatorContract {
     struct Request {
         address requester;
         string name;
+        string message;
         uint donation;
         uint createdAt;
     }
@@ -88,6 +89,7 @@ contract CreatorContract {
         Request memory request = Request({
             requester: requester,
             name: _handle,
+            message: _message,
             donation: donation,
             createdAt: block.timestamp
         });

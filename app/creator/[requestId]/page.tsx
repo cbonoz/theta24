@@ -9,21 +9,18 @@ import { useEthersSigner } from '@/lib/get-signer'
 import { ContractMetadata } from '@/lib/types'
 import { siteConfig } from '@/util/site-config'
 import {
-    abbreviate,
-    formatCurrency,
-    formatDate,
-    getExplorerUrl,
-    getIpfsUrl,
-    transformMetadata,
-} from '@/lib/utils'
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+  } from "@/components/ui/carousel"
+
 import { ReloadIcon } from '@radix-ui/react-icons'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import SignatureCanvas from 'react-signature-canvas'
 import { Address, Chain, createPublicClient, http } from 'viem'
 import { writeContract } from '@wagmi/core'
-import crypto, { sign } from 'crypto'
 
 import {
     useAccount,
@@ -32,16 +29,8 @@ import {
     useSwitchChain,
     useWriteContract,
 } from 'wagmi'
-
-const RESULT_KEYS = [
-    'name',
-    'description',
-    'recipientName',
-    'recipientAddress',
-    'owner',
-    'network',
-    'attestationId',
-]
+import { DEMO_METADATA } from '@/lib/constants'
+import { formatDate, isEmpty } from '@/lib/utils'
 
 interface Params {
     requestId: string
@@ -49,7 +38,7 @@ interface Params {
 
 export default function CreatorPage({ params }: { params: Params }) {
     const [loading, setLoading] = useState(true)
-    const [signLoading, setSignLoading] = useState(false)
+    const [sendLoading, setSendLoading] = useState(false)
     const [data, setData] = useState<ContractMetadata | undefined>()
     const [result, setResult] = useState<any>(null)
     const [message, setMessage] = useState('')
@@ -68,6 +57,7 @@ export default function CreatorPage({ params }: { params: Params }) {
     )
 
     const signer = useEthersSigner({ chainId })
+    const isOwner = data?.creatorAddress === address
 
     async function fetchData() {
         setLoading(true)
@@ -93,23 +83,15 @@ export default function CreatorPage({ params }: { params: Params }) {
             //     console.log('getAttestation', res)
             // }
         } catch (error) {
-            console.log('error reading contract', error)
-            setError(error)
+            console.error('error reading contract', error)
+            // setError(error)
+            setData(DEMO_METADATA)
         } finally {
             setLoading(false)
         }
     }
 
-    // https://wagmi.sh/react/guides/read-from-contract
-    // const { data: video } = useReadContract({
-    //     ...wagmiContractConfig,
-    //     functionName: 'videoOf',
-    //     args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
-    //   })
-
     async function makeVideoRequest() {
-
-
         try {
             const res = await writeContract(config, {
                 abi: CREATOR_CONTRACT.abi,
@@ -127,7 +109,7 @@ export default function CreatorPage({ params }: { params: Params }) {
             console.log('error signing request', error)
             setError(error)
         }
-        setSignLoading(false)
+        setSendLoading(false)
     }
 
     useEffect(() => {
@@ -165,6 +147,8 @@ export default function CreatorPage({ params }: { params: Params }) {
         return 'Creator page'
     }
 
+    const hasData = !!data?.creatorName
+
     return (
         // center align
         <div className="flex flex-col items-center justify-center mt-8">
@@ -182,6 +166,85 @@ export default function CreatorPage({ params }: { params: Params }) {
                         </p>
                     </div>
                 )}
+
+
+                {hasData && (<div>
+
+                    {data?.creatorName && (
+                        <div>
+                            <h2 className="text-2xl font-bold">{data.creatorName}</h2>
+                            <p>{data?.creatorDescription}</p>
+                            </div>)}
+
+                            {/* https://ui.shadcn.com/docs/components/carousel */}
+                    <Carousel
+                        opts={{
+                            align: "start",
+                            loop: true,
+                        }}
+                        >
+                        <CarouselContent>
+                            <CarouselItem>...</CarouselItem>
+                            <CarouselItem>...</CarouselItem>
+                            <CarouselItem>...</CarouselItem>
+                        </CarouselContent>
+                    </Carousel>
+
+                    <div className="mt-4">
+                        <h3 className="text-lg font-bold">Requests</h3>
+                        {isEmpty(data.requests) && (
+                            <div>No requests yet</div>
+                        )}
+                        <div>
+                            {data.requests.map((request, index) => (
+                                <div key={index} className="mt-2">
+                                    <div className="font-bold">{request.message} - {request.donation} ETH</div>
+                                    <div>{request.requester}</div>
+                                    {/* time */}
+                                    <div>{formatDate(request.createdAt)}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+
+                {!isOwner && (
+                    <div>
+                        <div>Make video request</div>
+
+
+                        <textarea
+                            className="w-full h-24 mt-2"
+                            placeholder="Enter your message"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        />
+
+                        <Button
+                            className="mt-4"
+                            onClick={() => {
+                                setSendLoading(true)
+                                makeVideoRequest()
+                            }}
+                            disabled={sendLoading}
+                        >
+                            {sendLoading && (
+                                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            )}
+                            Send request
+                        </Button>
+
+
+                    </div>)}
+
+                    </div>)}
+
+
+                {isOwner && (
+                    <div>
+                        <div>Creator actions</div>
+                        <div>Upload video (Coming soon)</div>
+                        </div>)}
 
                 {result && (
                     <div className="mt-4">

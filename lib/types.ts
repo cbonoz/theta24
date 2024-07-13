@@ -9,6 +9,7 @@ export interface VideoRequest {
     donation: string;
     message: string;
     requester?: string;
+    createdAt?: any;
 }
 
     // struct Metadata {
