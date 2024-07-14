@@ -174,22 +174,26 @@ export default function CreatorPage({ params }: { params: Params }) {
 	const currency = currentChain?.nativeCurrency?.symbol || "ETH";
 	const hasRequests = !isEmpty(data?.requests);
 
+	const screenWidth = window.innerWidth;
+
 	return (
 		// black background
-		<div className="bg-black">
+		<div className="bg-black px-20">
 			<Carousel
 				opts={{
-					align: "start",
-					loop: true,
+					align: "center",
 				}}
+				className={`w-full mx-auto`}
 			>
 				<CarouselContent className="w-full">
 					{(data?.initialVideoUrls || []).map((url: string, index: number) => (
 						<CarouselItem key={index} className="w-full">
-							<ReactPlayer url={url} controls={true} width="100%" height="800px" />
+							<ReactPlayer url={url} controls={true} height="800px" width="100%" />
 						</CarouselItem>
 					))}
 				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
 			</Carousel>
 			<div className="flex flex-col items-center justify-center">
 				<BasicCard

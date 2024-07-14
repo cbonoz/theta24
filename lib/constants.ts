@@ -11,8 +11,8 @@ export const DEMO_METADATA: ContractMetadata = {
 	creatorName: "CB productions",
 	creatorDescription: "This is a creator page",
 	initialVideoUrls: [
-		"https://www.youtube.com/watch?v=6ZfuNTqbHE8",
 		"https://www.youtube.com/watch?v=TcMBFSGVi1c",
+		"https://www.youtube.com/watch?v=6ZfuNTqbHE8",
 	],
 	creatorAddress: "0xf4982D4aC99d25d89Cc8993a88Dc643832B1515b",
 	requests: [
