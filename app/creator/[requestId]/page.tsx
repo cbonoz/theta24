@@ -227,7 +227,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 						</div>
 					)}
 
-					{hasCreator && (
+					{hasCreator && data && (
 						<div className="w-full">
 							{data?.creatorName && (
 								<div className="flex flex-col items-center justify-center">
@@ -250,7 +250,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 								<Link
 									target="_blank"
 									className="text-sm hover:underline text-blue-500"
-									href={getExplorerUrl(data.creatorAddress)}
+									href={getExplorerUrl(data.creatorAddress, currentChain)}
 								>
 									{data.creatorAddress}
 								</Link>

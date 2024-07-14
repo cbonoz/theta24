@@ -31,11 +31,7 @@ const rejectStyle = {
 	borderColor: "#ff1744",
 };
 
-function VideoDropzone({
-	onUpload,
-}: {
-	onUpload: (fileName: string, buffer: ArrayBuffer | null) => void;
-}) {
+function VideoDropzone({ onUpload }: { onUpload: (fileName: string, buffer: any) => void }) {
 	const onDrop = useCallback((acceptedFiles: any) => {
 		// Do something with the files
 		console.log("acceptedFiles", acceptedFiles);
@@ -45,7 +41,7 @@ function VideoDropzone({
 		reader.onload = () => {
 			const buffer = reader.result;
 			console.log("buffer", buffer);
-			onUpload(fileName, buffer);
+			onUpload(fileName, buffer as any);
 		};
 		reader.readAsArrayBuffer(acceptedFiles[0]);
 	}, []);
@@ -64,7 +60,7 @@ function VideoDropzone({
 
 	return (
 		<div className="container">
-			<div {...getRootProps({ style })}>
+			<div {...getRootProps({ style: style as any })}>
 				<input {...getInputProps()} />
 				<p>Upload a video file here, only one file at a time is allowed</p>
 			</div>

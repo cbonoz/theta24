@@ -26,9 +26,11 @@ With CreatorPage, creators can showcase their projects and connect with sponsors
 
 ### Example creator page
 
-Contract: https://testnet-blockscout.theta.com/address/0x9189c7722C0B815cd3752d559aD10980E20e59B4
+Contract: https://testnet-explorer.thetatoken.org/address/0xA3ED761e2447589081F413c0f78D8fe3f68793fD
 
-Creator page: https://creatorpage.vercel.app/creator/0x9189c7722C0B815cd3752d559aD10980E20e59B4 (only viewable with designated recipient address).
+Creator page: https://creatorpage.vercel.app/creator/cb-videos
+
+Creator page demo (no wallet connection required): https://creatorpage.vercel.app/creator/demo
 
 ### Example use case
 
