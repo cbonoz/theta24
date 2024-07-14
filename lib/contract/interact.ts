@@ -88,7 +88,7 @@ export const requestVideo = async (
 	donation: number,
 ): Promise<any> => {
 	const contract = new ethers.Contract(siteConfig.masterAddress, CREATOR_CONTRACT.abi, signer);
-	const body = { value: ethToWei(donation) };
+	const body = { value: ethToWei(donation), gasLimit: "100000" };
 	console.log("makeRequest", body);
 	const tx = await contract.makeRequest(handle, message, body);
 

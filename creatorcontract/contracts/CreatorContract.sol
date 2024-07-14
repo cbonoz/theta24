@@ -5,7 +5,7 @@ contract CreatorContract {
 
 
     // Struct to represent a video request
-    uint256 constant MAX_REQUESTS = 10;
+    uint256 constant LATEST_REQUESTS = 10;
 
     struct Request {
         address requester;
@@ -21,7 +21,7 @@ contract CreatorContract {
         string creatorDescription;
         string initialVideoUrls;
         address creatorAddress;
-        Request[MAX_REQUESTS] requests;
+        Request[LATEST_REQUESTS] requests;
         bool active;
         uint createdAt;
         bool isValue;
@@ -85,21 +85,24 @@ contract CreatorContract {
             address payable creatorAddress = payable(creator.creatorAddress);
             creatorAddress.transfer(donation);
         }
-        
-        Request memory request = Request({
-            requester: requester,
-            message: _message,
-            donation: donation,
-            createdAt: block.timestamp
-        });
-       // Add the request at the oldest request index
-        creator.requests[creator.oldestRequestIndex] = request;
+
+        // Request memory request = Request({
+        //     requester: requester,
+        //     message: _message,
+        //     donation: donation,
+        //     createdAt: block.timestamp
+        // });
+       // Update values directly on index individually
+        creator.requests[creator.oldestRequestIndex].requester = requester;
+        creator.requests[creator.oldestRequestIndex].message = _message;
+        creator.requests[creator.oldestRequestIndex].donation = donation;
+        creator.requests[creator.oldestRequestIndex].createdAt = block.timestamp;
 
         // Update the oldest request index
-        creator.oldestRequestIndex = (creator.oldestRequestIndex + 1) % MAX_REQUESTS;
+        creator.oldestRequestIndex = (creator.oldestRequestIndex + 1) % LATEST_REQUESTS;
 
-        // If the request count is less than MAX_REQUESTS, increment it
-        if (creator.requestCount < MAX_REQUESTS) {
+        // If the request count is less than LATEST_REQUESTS, increment it
+        if (creator.requestCount < LATEST_REQUESTS) {
             creator.requestCount++;
         }
 

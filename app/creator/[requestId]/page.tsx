@@ -42,7 +42,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { generateVideoRequestScript } from "@/lib/generate-script";
-import { processMetadata, processMetadataObject } from "@/lib/contract/interact";
+import { processMetadataObject, requestVideo } from "@/lib/contract/interact";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@radix-ui/react-select";
 import { Input } from "@/components/ui/input";
@@ -65,12 +65,10 @@ export default function CreatorPage({ params }: { params: Params }) {
 	const [message, setMessage] = useState("");
 	const [videoResult, setVideoResult] = useState<any>(null);
 	const [error, setError] = useState<any>(null);
-	const ref = useRef(null);
 	const { chains, switchChain } = useSwitchChain();
 	const { address } = useAccount();
 
 	const router = useRouter();
-	const setData = (d: any) => {};
 
 	const { requestId: handle } = params;
 
@@ -112,19 +110,23 @@ export default function CreatorPage({ params }: { params: Params }) {
 	}
 
 	async function makeVideoRequest() {
+		setSendLoading(true);
+		setError(null);
 		try {
-			const res = await writeContract(config, {
-				abi: CREATOR_CONTRACT.abi,
-				address: siteConfig.masterAddress as Address,
-				functionName: "makeRequest",
-				args: [handle, message],
-			});
+			// const res = await writeContract(config, {
+			// 	abi: CREATOR_CONTRACT.abi,
+			// 	address: siteConfig.masterAddress as Address,
+			// 	functionName: "makeRequest",
+			// 	args: [handle, message],
+			// });
+
+			const res = await requestVideo(signer, handle, message, donation);
 
 			console.log("makeVideoRequest", res, handle, message);
 			window?.location?.reload();
 			alert("Thanks for making a request! The creator can now see your message.");
 		} catch (error) {
-			console.log("error making request", error);
+			console.error("error making request", error);
 			setError(getReadableError(error));
 		} finally {
 			setSendLoading(false);
@@ -170,11 +172,25 @@ export default function CreatorPage({ params }: { params: Params }) {
 		return "Creator page";
 	};
 
-	const hasData = !!data?.creatorName;
+	const hasCreator = !isEmpty(data?.creatorName);
 	const currency = currentChain?.nativeCurrency?.symbol || "ETH";
 	const hasRequests = !isEmpty(data?.requests);
+	const handleNotClaimed = !hasCreator && !loading;
 
-	const screenWidth = window.innerWidth;
+	if (handleNotClaimed) {
+		return (
+			<div className="flex flex-col items-center justify-center mt-8">
+				<div>This handle has not been claimed by a creator yet!</div>
+				<div>
+					Click&nbsp;
+					<a href="/upload" className="hover:underline text-blue-500">
+						here
+					</a>
+					&nbsp;to claim it!
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		// black background
@@ -182,6 +198,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 			<Carousel
 				opts={{
 					align: "center",
+					loop: true,
 				}}
 				className={`w-full mx-auto`}
 			>
@@ -210,11 +227,16 @@ export default function CreatorPage({ params }: { params: Params }) {
 						</div>
 					)}
 
-					{hasData && (
+					{hasCreator && (
 						<div className="w-full">
 							{data?.creatorName && (
 								<div className="flex flex-col items-center justify-center">
-									{isOwner && <div className="italic text-xl">Owner View</div>}
+									{isOwner && (
+										<div className="italic text-xl mb-4">
+											You are the owner of this page
+											<br />
+										</div>
+									)}
 									<h2 className="text-4xl my-2 font-bold text-green-500 text-center">
 										{getTitle()}
 									</h2>
@@ -237,10 +259,11 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 							{/* https://ui.shadcn.com/docs/components/carousel */}
 
-							<div className="mt-4">
+							<div className="my-4">
 								<h3 className="text-2xl font-bold">
 									Video Requests {hasRequests && <span>({data.requests.length})</span>}
 								</h3>
+								<div className="italic">These are video requests submitted to this creator.</div>
 								{!hasRequests && <div className="text-gray-500">No requests yet</div>}
 								<div>
 									{data.requests.map((request, index) => (
@@ -279,7 +302,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 									))}
 								</div>
 
-								{THETA_KEY && (
+								{THETA_KEY && isOwner && (
 									<div>
 										<hr />
 										<div className="text-2xl font-bold mt-4">
@@ -290,7 +313,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 											<VideoDropzone onUpload={onUpload} />
 											{videoResult && (
 												<div>
-													<RenderObject title="Result" obj={videoResult} />
+													<RenderObject title="Video Uploaded!" obj={videoResult} />
 												</div>
 											)}
 										</div>
@@ -303,7 +326,10 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 							{!isOwner && (
 								<div>
-									<div className="text-2xl font-bold">Make a video request</div>
+									<div className="text-2xl font-bold">Add a video request</div>
+									<div className="italic">
+										Video requests will be received by the creator via a smart contract transaction.
+									</div>
 
 									<Textarea
 										className="w-full mt-2"

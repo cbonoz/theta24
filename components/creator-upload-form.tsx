@@ -165,7 +165,7 @@ function CreatorForm() {
 							name="handle"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Enter creator page handle</FormLabel>
+									<FormLabel>Enter desired creator page handle</FormLabel>
 									<FormControl>
 										<Input placeholder={`Creator page handle`} {...field} />
 									</FormControl>
