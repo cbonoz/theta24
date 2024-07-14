@@ -87,7 +87,6 @@ function CreatorForm() {
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const { handle, title, description, videoUrls } = values;
-
 		console.log("values", values);
 
 		setLoading(true);
