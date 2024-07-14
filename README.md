@@ -18,9 +18,9 @@ Connecting creators with sponsors can be challenging due to trust issues and the
 
 These platforms also frequently require large engineering teams to maintain.
 
-I wanted to create a system using Theta that enabled anyone to create their own portfolio page and collect donations compeltely facilitated by a smart contract without requiring any intermediary servers.
+We wanted to create a system using Theta that enabled anyone to create their own portfolio page and collect donations compeltely facilitated by a smart contract without requiring any intermediary servers.
 
-When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request.
+When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request. The creator is allowed to auto-generate a script for any incoming request using Theta LLM.
 
 With CreatorPage, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
 

@@ -43,11 +43,6 @@ contract CreatorContract {
         network = _network;
     }
 
-    // get owner
-    function getContractOwner() public view returns (address) {
-        return owner;
-    }
-
     function registerHandle(string memory _handle,
         string memory _creatorName,
         string memory _creatorDescription,
@@ -126,5 +121,14 @@ contract CreatorContract {
         // Verify handle exists
         require(creatorMap[_handle].isValue, "Creator page does not exist");
         return creatorMap[_handle];
+    }
+
+    function getMetadataUnchecked(string memory _handle) public view returns (Metadata memory) {
+        return creatorMap[_handle];
+    }
+
+    // get owner
+    function getContractOwner() public view returns (address) {
+        return owner;
     }
 }

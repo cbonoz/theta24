@@ -6,7 +6,7 @@ import RenderObject from "@/components/render-object";
 import { Button } from "@/components/ui/button";
 import { CREATOR_CONTRACT } from "@/lib/contract/metadata";
 import { useEthersSigner } from "@/lib/get-signer";
-import { ContractMetadata } from "@/lib/types";
+import { ContractMetadata, VideoRequest } from "@/lib/types";
 import { siteConfig } from "@/util/site-config";
 import {
 	Carousel,
@@ -31,7 +31,16 @@ import {
 	useWriteContract,
 } from "wagmi";
 import { DEMO_METADATA } from "@/lib/constants";
-import { formatDate, isEmpty } from "@/lib/utils";
+import { formatDate, getReadableError, isEmpty } from "@/lib/utils";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import { generateVideoRequestScript } from "@/lib/generate-script";
 
 interface Params {
 	requestId: string;
@@ -40,6 +49,8 @@ interface Params {
 export default function CreatorPage({ params }: { params: Params }) {
 	const [loading, setLoading] = useState(false);
 	const [sendLoading, setSendLoading] = useState(false);
+	const [scriptLoading, setScriptLoading] = useState(false);
+	const [generatedScript, setGeneratedScript] = useState<any>({});
 	// const [data, setData] = useState<ContractMetadata | undefined>();
 	const [result, setResult] = useState<any>(null);
 	const [message, setMessage] = useState("");
@@ -49,21 +60,24 @@ export default function CreatorPage({ params }: { params: Params }) {
 	const { address } = useAccount();
 
 	const router = useRouter();
+	const setData = (d: any) => {};
 
 	const { requestId: handle } = params;
 
 	const {
-		data,
+		data: readData,
 		isPending,
 		error: readError,
 	} = useReadContract({
 		abi: CREATOR_CONTRACT.abi,
 		address: siteConfig.masterAddress as Address,
-		functionName: "getMetadataForHandle",
+		functionName: "getMetadataUnchecked",
 		args: [handle],
 	});
 
-	console.log("data", data, readError, error);
+	const data: ContractMetadata = (readData as ContractMetadata)?.isValue
+		? (readData as ContractMetadata)
+		: (DEMO_METADATA as ContractMetadata);
 
 	const chainId = useChainId();
 	const currentChain: Chain | undefined = (chains || []).find((c) => c.id === chainId);
@@ -101,6 +115,21 @@ export default function CreatorPage({ params }: { params: Params }) {
 		}
 	}
 
+	async function getGeneratedScript(request: VideoRequest) {
+		setScriptLoading(true);
+		try {
+			const prompt = request.message;
+			const res = await generateVideoRequestScript(prompt);
+			console.log("generateScript", res, handle, prompt);
+			setGeneratedScript({ script: res, request });
+		} catch (error) {
+			console.log("error generating script", error);
+			setError(getReadableError(error));
+		} finally {
+			setScriptLoading(false);
+		}
+	}
+
 	async function makeVideoRequest() {
 		try {
 			const res = await writeContract(config, {
@@ -114,10 +143,11 @@ export default function CreatorPage({ params }: { params: Params }) {
 			await fetchData();
 			alert("Thanks for making a request! The creator can now see your message.");
 		} catch (error) {
-			console.log("error signing request", error);
-			setError(error);
+			console.log("error making request", error);
+			setError(getReadableError(error));
+		} finally {
+			setSendLoading(false);
 		}
-		setSendLoading(false);
 	}
 
 	useEffect(() => {
@@ -145,8 +175,8 @@ export default function CreatorPage({ params }: { params: Params }) {
 	const getTitle = () => {
 		if (data?.creatorName) {
 			return data?.creatorName || "Creator page";
-		} else if (error) {
-			return "Error accessing Creator page";
+		} else if (error || invalid) {
+			return "Error accessing page";
 		}
 		return "Creator page";
 	};
@@ -162,16 +192,16 @@ export default function CreatorPage({ params }: { params: Params }) {
 				className="max-w-[1000px] p-4"
 			>
 				{invalid && (
-					<div className="font-bold">
+					<div className="font-bold text-red-500">
 						<p>
-							This contract may not exist or may be on another network, double check your currently
-							connected network
+							This page may not exist or may be on another network, double check your currently
+							connected network.
 						</p>
 					</div>
 				)}
 
 				{hasData && (
-					<div>
+					<div className="w-full mx-8">
 						{data?.creatorName && (
 							<div>
 								<h2 className="text-2xl font-bold">{data.creatorName}</h2>
@@ -187,9 +217,11 @@ export default function CreatorPage({ params }: { params: Params }) {
 							}}
 						>
 							<CarouselContent>
-								<CarouselItem>...</CarouselItem>
-								<CarouselItem>...</CarouselItem>
-								<CarouselItem>...</CarouselItem>
+								{data?.initialVideoUrls.map((url, index) => (
+									<CarouselItem key={index}>
+										<video src={url} controls></video>
+									</CarouselItem>
+								))}
 							</CarouselContent>
 						</Carousel>
 
@@ -198,13 +230,29 @@ export default function CreatorPage({ params }: { params: Params }) {
 							{isEmpty(data.requests) && <div>No requests yet</div>}
 							<div>
 								{data.requests.map((request, index) => (
-									<div key={index} className="mt-2">
-										<div className="font-bold">
-											{request.message} - {request.donation} ETH
+									<div
+										key={index}
+										className="flex items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm mt-2"
+									>
+										<div className="flex flex-col">
+											<div className="font-bold text-lg">
+												{request.message} - {request.donation} ETH
+											</div>
+											<div className="text-sm text-gray-600">{request.requester}</div>
+											{/* time */}
+											<div className="text-xs text-gray-500">{formatDate(request.createdAt)}</div>
 										</div>
-										<div>{request.requester}</div>
-										{/* time */}
-										<div>{formatDate(request.createdAt)}</div>
+										<div className="flex items-center space-x-4">
+											<Button
+												className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+												onClick={() => getGeneratedScript(request)}
+											>
+												Generate Script
+											</Button>
+											{/* <a href="#" className="text-blue-500 text-sm hover:underline">
+												View transaction
+											</a> */}
+										</div>
 									</div>
 								))}
 							</div>
@@ -251,8 +299,23 @@ export default function CreatorPage({ params }: { params: Params }) {
 					</div>
 				)}
 
-				{error && <div className="mt-2 text-red-500">{error.message}</div>}
+				{error && <div className="mt-2 text-red-500">{error}</div>}
 			</BasicCard>
+			<Dialog
+				open={!!generatedScript?.request}
+				onOpenChange={(open) => {
+					if (!open) {
+						setGeneratedScript({});
+					}
+				}}
+			>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Generated script for {generatedScript?.request?.message}</DialogTitle>
+						<DialogDescription>{generatedScript?.script}</DialogDescription>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

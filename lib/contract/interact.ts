@@ -4,31 +4,40 @@ import { ethers } from "ethers";
 import { ContractMetadata, VideoRequest } from "../types";
 import { siteConfig } from "@/util/site-config";
 
-const processMetadata = (result: any[]): ContractMetadata => {
-	return {
+const processMetadata = (result: any[], allowInvalid?: boolean): ContractMetadata => {
+	const initialVideoUrls = result[3].split(",").map((url: string) => url.trim());
+	const createdAt = formatDate(Number(result[7]) * 1000);
+	const metadata = {
 		handle: result[0],
 		creatorName: result[1],
 		creatorDescription: result[2],
-		initialVideoUrls: result[3],
+		initialVideoUrls,
 		creatorAddress: result[4],
 		requests: result[5],
 		active: result[6],
-		createdAt: formatDate(result[7].toNumber() * 1000),
+		createdAt,
 		isValue: result[8],
 	};
+
+	if (metadata.isValue === false && !allowInvalid) {
+		throw new Error("Handle not found");
+	}
+
+	return metadata;
 };
 
 export const getMetadataForHandle = async (
 	signer: any,
 	handle: string,
+	allowInvalid?: boolean,
 ): Promise<ContractMetadata> => {
 	const address = siteConfig.masterAddress;
 	console.log("getMetadataForHandle", handle, address);
 	const contract = new ethers.Contract(address, CREATOR_CONTRACT.abi, signer);
 	// call  with args
-	const result = await contract.getMetadataForHandle(handle);
+	const result = await contract.getMetadataUnchecked(handle);
 	console.log("result", result);
-	return processMetadata(result);
+	return processMetadata(result, allowInvalid);
 };
 
 export const registerHandle = async (

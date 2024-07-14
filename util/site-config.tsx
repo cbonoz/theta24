@@ -11,12 +11,12 @@ export const siteConfig = {
 		{
 			title: "What is CreatorPage?",
 			description:
-				"CreatorPage connects content creators with sponsors using Theta blockchain technology to ensure secure and transparent collaborations.",
+				"CreatorPage connects content creators with sponsors using Theta blockchain technology, providing a secure and transparent platform for collaborations. It allows creators to showcase their projects and collect donations facilitated entirely by smart contracts.",
 		},
 		{
 			title: "How does it work?",
 			description:
-				"Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and video transfers, ensuring all parties meet their obligations.",
+				"Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and video transfers, ensuring all parties meet their obligations. When a request is received, the creator immediately receives the donation, and an event is emitted from the smart contract detailing the request.",
 		},
 		{
 			title: "Disclaimer",
@@ -28,17 +28,16 @@ export const siteConfig = {
 		{
 			title: "Create",
 			description:
-				"Creators post their project ideas, specifying the type of content and required sponsorship.",
+				"Creators post their project ideas, specifying the type of content and required sponsorship. They can auto-generate scripts for incoming requests using Theta LLM.",
 		},
 		{
 			title: "Connect",
 			description:
-				"Sponsors browse projects and connect with creators whose ideas they want to support. Agreements are managed through smart contracts.",
+				"Sponsors browse projects and connect with creators whose ideas they want to support. Smart contracts manage the agreements, ensuring secure and transparent transactions.",
 		},
 		{
 			title: "Collaborate",
-			description:
-				"Creators and sponsors collaborate to bring the project to life. Smart contracts ensure that videos are released only when agreed milestones are met.",
+			description: "Creators and sponsors collaborate to bring the project to life.",
 		},
 	],
 };

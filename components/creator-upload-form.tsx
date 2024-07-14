@@ -16,7 +16,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { getExplorerUrl, getPlaceholderDescription, isEmpty, creatorPageUrl } from "@/lib/utils";
+import {
+	getExplorerUrl,
+	getPlaceholderDescription,
+	isEmpty,
+	creatorPageUrl,
+	getReadableError,
+} from "@/lib/utils";
 import Link from "next/link";
 import { Textarea } from "./ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
@@ -85,15 +91,17 @@ function CreatorForm() {
 		setError(null);
 
 		try {
-			const metadata = await getMetadataForHandle(signer, handle);
+			const metadata = await getMetadataForHandle(signer, handle, true);
 			console.log("metadata", metadata);
+			if (metadata.isValue) {
+				throw new Error("Handle already exists");
+			}
 		} catch (err: any) {
 			// Error expected
-			console.error(err);
-			setError(err?.message || "Unknown error");
-			return;
-		} finally {
+			setError(getReadableError(err));
+			console.error("error checking metadata", err);
 			setLoading(false);
+			return;
 		}
 
 		try {
@@ -101,7 +109,7 @@ function CreatorForm() {
 
 			// upload contract
 
-			const registerTx = await registerHandle(
+			const registerResult = await registerHandle(
 				signer,
 				handle,
 				title,
@@ -116,8 +124,9 @@ function CreatorForm() {
 			//     args: [handle, title, description || '', videoUrls || ''],
 			// })
 
+			const registerTx = registerResult.tx.hash;
 			console.log("registerResult", registerTx);
-			res["contractUrl"] = getExplorerUrl(registerTx, currentChain, true);
+			res["txUrl"] = getExplorerUrl(registerTx, currentChain, true);
 			res["message"] =
 				"Page created successfully. Include the url below in your social media profiles.";
 			res["url"] = creatorPageUrl(handle);
@@ -127,7 +136,7 @@ function CreatorForm() {
 			clearForm();
 		} catch (err: any) {
 			console.error(err);
-			setError(err?.message || "Unknown error");
+			setError(getReadableError(err));
 		} finally {
 			setLoading(false);
 		}
@@ -244,11 +253,11 @@ function CreatorForm() {
 							{result.url}
 						</Link>
 						<div className="mt-2">
-							{result?.transactionUrl && (
+							{result?.txUrl && (
 								<Button
 									variant={"secondary"}
 									onClick={() => {
-										window.open(result.transactionUrl);
+										window.open(result.txUrl);
 									}}
 								>
 									View transaction
