@@ -4,12 +4,20 @@ import BasicCard from "@/components/basic-card";
 import RenderObject from "@/components/render-object";
 import { Button } from "@/components/ui/button";
 import { useEthersSigner } from "@/lib/get-signer";
+import { getExplorerUrl } from "@/lib/utils";
 import { siteConfig } from "@/util/site-config";
+import Link from "next/link";
 import { useState } from "react";
+import { Chain } from "viem";
+import { useChainId, useChains } from "wagmi";
 
 const About = () => {
 	const [loading, setLoading] = useState(false);
 	const [result, setResult] = useState<any>(null);
+
+	const chainId = useChainId();
+	const chains = useChains();
+	const currentChain: Chain | undefined = (chains || []).find((c) => c.id === chainId);
 
 	const signer = useEthersSigner();
 
@@ -26,6 +34,16 @@ const About = () => {
 						<p>{section.description}</p>
 					</div>
 				))}
+
+				<br />
+
+				<Link
+					target="_blank"
+					className="text-blue-500 hover:underline"
+					href={getExplorerUrl(siteConfig.masterAddress, currentChain)}
+				>
+					View master contract on Etherscan
+				</Link>
 
 				{/* <Button
                     onClick={getSchemaId}

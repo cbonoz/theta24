@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { ContractMetadata, VideoRequest } from "../types";
 import { siteConfig } from "@/util/site-config";
 
-const processMetadata = (result: any[], allowInvalid?: boolean): ContractMetadata => {
+export const processMetadata = (result: any[], allowInvalid?: boolean): ContractMetadata => {
 	const initialVideoUrls = result[3].split(",").map((url: string) => url.trim());
 	const createdAt = formatDate(Number(result[7]) * 1000);
 	const metadata = {
@@ -22,6 +22,31 @@ const processMetadata = (result: any[], allowInvalid?: boolean): ContractMetadat
 	if (metadata.isValue === false && !allowInvalid) {
 		throw new Error("Handle not found");
 	}
+
+	return metadata;
+};
+
+export const processMetadataObject = (
+	result: ContractMetadata | undefined,
+): ContractMetadata | undefined => {
+	if (!result) {
+		return result;
+	}
+	const initialVideoUrls = (result.initialVideoUrls || "")
+		.split(",")
+		.map((url: string) => url.trim());
+	const createdAt = formatDate(Number(result.createdAt) * 1000);
+	const metadata = {
+		handle: result.handle,
+		creatorName: result.creatorName,
+		creatorDescription: result.creatorDescription,
+		initialVideoUrls,
+		creatorAddress: result.creatorAddress,
+		requests: result.requests.filter((r: VideoRequest) => !!r.createdAt),
+		active: result.active,
+		createdAt,
+		isValue: result.isValue,
+	};
 
 	return metadata;
 };

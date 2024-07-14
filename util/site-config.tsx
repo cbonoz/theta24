@@ -1,3 +1,6 @@
+import { getExplorerUrl } from "@/lib/utils";
+import Link from "next/link";
+
 export const siteConfig = {
 	title: "CreatorPage",
 	description: "A smart contract mediated marketplace connecting creators with sponsors",
@@ -16,7 +19,16 @@ export const siteConfig = {
 		{
 			title: "How does it work?",
 			description:
-				"Creators can post their project ideas and sponsors can browse through these projects to find ones they want to support. Smart contracts manage the agreements and video transfers, ensuring all parties meet their obligations. When a request is received, the creator immediately receives the donation, and an event is emitted from the smart contract detailing the request.",
+				"Creators can create a portfolio page with project ideas and required sponsorships. Sponsors can browse projects and connect with creators to fund project ideas. Any requests with donations can be connected to a Theta LLM to auto-generate scripts.",
+		},
+		{
+			title: `Where is the CreatorPage contract deployed?`,
+			description: (
+				<span>
+					The CreatorPage contract is deployed on the Theta testnet at address:&nbsp;
+					{process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}
+				</span>
+			),
 		},
 		{
 			title: "Disclaimer",

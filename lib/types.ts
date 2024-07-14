@@ -27,7 +27,7 @@ export interface ContractMetadata {
     handle: string
     creatorName: string
     creatorDescription: string
-    initialVideoUrls: string[]
+    initialVideoUrls: any
     creatorAddress: string
     requests: VideoRequest[]
     active: boolean

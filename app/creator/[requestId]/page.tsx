@@ -31,7 +31,7 @@ import {
 	useWriteContract,
 } from "wagmi";
 import { DEMO_METADATA } from "@/lib/constants";
-import { formatDate, getReadableError, isEmpty } from "@/lib/utils";
+import { formatDate, getExplorerUrl, getReadableError, isEmpty } from "@/lib/utils";
 import {
 	Dialog,
 	DialogContent,
@@ -41,14 +41,20 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { generateVideoRequestScript } from "@/lib/generate-script";
+import { processMetadata, processMetadataObject } from "@/lib/contract/interact";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@radix-ui/react-select";
+import { Input } from "@/components/ui/input";
+import { FormControl } from "@/components/ui/form";
+import Link from "next/link";
 
 interface Params {
 	requestId: string;
 }
 
 export default function CreatorPage({ params }: { params: Params }) {
-	const [loading, setLoading] = useState(false);
 	const [sendLoading, setSendLoading] = useState(false);
+	const [donation, setDonation] = useState(0);
 	const [scriptLoading, setScriptLoading] = useState(false);
 	const [generatedScript, setGeneratedScript] = useState<any>({});
 	// const [data, setData] = useState<ContractMetadata | undefined>();
@@ -66,7 +72,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 	const {
 		data: readData,
-		isPending,
+		isPending: loading,
 		error: readError,
 	} = useReadContract({
 		abi: CREATOR_CONTRACT.abi,
@@ -75,45 +81,16 @@ export default function CreatorPage({ params }: { params: Params }) {
 		args: [handle],
 	});
 
-	const data: ContractMetadata = (readData as ContractMetadata)?.isValue
-		? (readData as ContractMetadata)
-		: (DEMO_METADATA as ContractMetadata);
+	const data: ContractMetadata | undefined =
+		handle !== "demo"
+			? processMetadataObject(readData as ContractMetadata)
+			: (DEMO_METADATA as ContractMetadata);
 
 	const chainId = useChainId();
 	const currentChain: Chain | undefined = (chains || []).find((c) => c.id === chainId);
 
 	const signer = useEthersSigner({ chainId });
 	const isOwner = data?.creatorAddress === address;
-
-	async function fetchData() {
-		setLoading(true);
-		try {
-			const publicClient = createPublicClient({
-				chain: currentChain,
-				transport: http(),
-			});
-			let contractData: ContractMetadata = (await publicClient.readContract({
-				abi: CREATOR_CONTRACT.abi,
-				address: siteConfig.masterAddress as Address,
-				functionName: "getMetadataForHandle",
-				args: [handle],
-			})) as ContractMetadata;
-			// convert video and validatedAt to number from bigint
-			console.log("contractData", contractData);
-			setData(contractData);
-
-			// if (contractData.attestationId && SCHEMA_ID) {
-			//     const res = await getAttestation(contractData.attestationId)
-			//     console.log('getAttestation', res)
-			// }
-		} catch (error) {
-			console.error("error reading contract", error);
-			// setError(error)
-			setData(DEMO_METADATA);
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	async function getGeneratedScript(request: VideoRequest) {
 		setScriptLoading(true);
@@ -140,7 +117,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 			});
 
 			console.log("makeVideoRequest", res, handle, message);
-			await fetchData();
+			window?.location?.reload();
 			alert("Thanks for making a request! The creator can now see your message.");
 		} catch (error) {
 			console.log("error making request", error);
@@ -150,14 +127,6 @@ export default function CreatorPage({ params }: { params: Params }) {
 		}
 	}
 
-	useEffect(() => {
-		if (address) {
-			// fetchData();
-		} else {
-			setLoading(false);
-		}
-	}, [address]);
-
 	if (loading) {
 		return <div className="flex flex-col items-center justify-center mt-8">Loading...</div>;
 	}
@@ -165,7 +134,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 	if (!address) {
 		return (
 			<div className="flex flex-col items-center justify-center mt-8">
-				Please connect your wallet to view contracts
+				Please connect your wallet to view creator pages.
 			</div>
 		);
 	}
@@ -182,6 +151,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 	};
 
 	const hasData = !!data?.creatorName;
+	const currency = currentChain?.nativeCurrency?.symbol || "ETH";
 
 	return (
 		// center align
@@ -209,6 +179,19 @@ export default function CreatorPage({ params }: { params: Params }) {
 							</div>
 						)}
 
+						{/* Creator address */}
+						<div className="mt-4">
+							<div className="text-sm text-gray-500">Creator address</div>
+							<div>Donations will go to this address. Only donate to trusted creators.</div>
+							<Link
+								target="_blank"
+								className="text-sm hover:underline text-blue-500"
+								href={getExplorerUrl(data.creatorAddress)}
+							>
+								{data.creatorAddress}
+							</Link>
+						</div>
+
 						{/* https://ui.shadcn.com/docs/components/carousel */}
 						<Carousel
 							opts={{
@@ -217,7 +200,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 							}}
 						>
 							<CarouselContent>
-								{data?.initialVideoUrls.map((url, index) => (
+								{(data?.initialVideoUrls || []).map((url: string, index: number) => (
 									<CarouselItem key={index}>
 										<video src={url} controls></video>
 									</CarouselItem>
@@ -226,7 +209,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 						</Carousel>
 
 						<div className="mt-4">
-							<h3 className="text-lg font-bold">Requests</h3>
+							<h3 className="text-2xl font-bold">Video Requests</h3>
 							{isEmpty(data.requests) && <div>No requests yet</div>}
 							<div>
 								{data.requests.map((request, index) => (
@@ -236,9 +219,15 @@ export default function CreatorPage({ params }: { params: Params }) {
 									>
 										<div className="flex flex-col">
 											<div className="font-bold text-lg">
-												{request.message} - {request.donation} ETH
+												{request.message} - {request.donation} {currency}
 											</div>
-											<div className="text-sm text-gray-600">{request.requester}</div>
+											<Link
+												target="_blank"
+												className="text-sm hover:underline text-blue-500"
+												href={getExplorerUrl(request.requester, currentChain)}
+											>
+												Donated by: {request.requester}
+											</Link>
 											{/* time */}
 											<div className="text-xs text-gray-500">{formatDate(request.createdAt)}</div>
 										</div>
@@ -258,15 +247,26 @@ export default function CreatorPage({ params }: { params: Params }) {
 							</div>
 						</div>
 
+						<hr className="my-4" />
+						<Separator />
+
 						{!isOwner && (
 							<div>
-								<div>Make video request</div>
+								<div className="text-2xl font-bold">Make a video request</div>
 
-								<textarea
+								<Textarea
 									className="w-full mt-2"
 									placeholder="Enter your message"
 									value={message}
 									onChange={(e) => setMessage(e.target.value)}
+								/>
+
+								{/* Donation */}
+								<Input
+									type="number"
+									placeholder="Donation in ETH"
+									value={donation}
+									onChange={(e) => setDonation(Number(e.target.value))}
 								/>
 
 								<Button
@@ -285,12 +285,12 @@ export default function CreatorPage({ params }: { params: Params }) {
 					</div>
 				)}
 
-				{isOwner && (
+				{/* {isOwner && (
 					<div>
 						<div>Creator actions</div>
 						<div>Upload video (Coming soon)</div>
 					</div>
-				)}
+				)} */}
 
 				{result && (
 					<div className="mt-4">

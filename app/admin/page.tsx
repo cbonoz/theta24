@@ -59,6 +59,12 @@ const AdminPage = () => {
 					&nbsp; Deploy master contract
 				</Button>
 
+				{loading && (
+					<div className="mt-4 italic">
+						Do not leave this page until the transaction is confirmed.
+					</div>
+				)}
+
 				{error && <div className="text-red-500">{error}</div>}
 
 				{contract?.address && (

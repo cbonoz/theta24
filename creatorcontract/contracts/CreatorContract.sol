@@ -3,10 +3,12 @@ pragma solidity ^0.8.19;
 
 contract CreatorContract {
 
+
     // Struct to represent a video request
+    uint256 constant MAX_REQUESTS = 10;
+
     struct Request {
         address requester;
-        string name;
         string message;
         uint donation;
         uint createdAt;
@@ -19,10 +21,12 @@ contract CreatorContract {
         string creatorDescription;
         string initialVideoUrls;
         address creatorAddress;
-        Request[] requests;
+        Request[MAX_REQUESTS] requests;
         bool active;
         uint createdAt;
         bool isValue;
+        uint256 requestCount;
+        uint256 oldestRequestIndex;
     }
 
     // owner
@@ -48,7 +52,7 @@ contract CreatorContract {
         string memory _creatorDescription,
         string memory _initialVideoUrls
     ) public returns (Metadata memory) {
-        Metadata memory creator = creatorMap[_handle];
+        Metadata storage creator = creatorMap[_handle];
         require(!creator.isValue, "A creator page for this handle already exists");
 
         // set values
@@ -61,13 +65,15 @@ contract CreatorContract {
         creator.createdAt = block.timestamp;
         creator.isValue = true;
 
+        creatorMap[_handle] = creator;
 
         emit HandleCreated(_handle);
         return creatorMap[_handle];
     }
 
     function makeRequest(string memory _handle, string memory _message) public payable returns (Metadata memory) {
-        Metadata memory creator = getMetadataForHandle(_handle);
+        Metadata storage creator = creatorMap[_handle];
+        require(!creator.isValue, "A creator page for this handle already exists");
 
         address requester = msg.sender;
         uint donation = msg.value;
@@ -79,17 +85,25 @@ contract CreatorContract {
             address payable creatorAddress = payable(creator.creatorAddress);
             creatorAddress.transfer(donation);
         }
-
-        // add request to creator
+        
         Request memory request = Request({
             requester: requester,
-            name: _handle,
             message: _message,
             donation: donation,
             createdAt: block.timestamp
         });
+       // Add the request at the oldest request index
+        creator.requests[creator.oldestRequestIndex] = request;
 
-        creator.requests = copyAndAppendRequest(creator.requests, request);
+        // Update the oldest request index
+        creator.oldestRequestIndex = (creator.oldestRequestIndex + 1) % MAX_REQUESTS;
+
+        // If the request count is less than MAX_REQUESTS, increment it
+        if (creator.requestCount < MAX_REQUESTS) {
+            creator.requestCount++;
+        }
+
+        creatorMap[_handle] = creator;
 
         // emit event
         emit VideoRequest(requester, _handle, _message, donation);
@@ -105,15 +119,6 @@ contract CreatorContract {
         // emit event
         emit VideoUploaded(msg.sender, _contentId, _description);
         return metadata;
-    }
-
-    function copyAndAppendRequest(Request[] memory requests, Request memory request) private pure returns (Request[] memory) {
-        Request[] memory newRequests = new Request[](requests.length + 1);
-        for (uint i = 0; i < requests.length; i++) {
-            newRequests[i] = requests[i];
-        }
-        newRequests[requests.length] = request;
-        return newRequests;
     }
 
     // get metadata

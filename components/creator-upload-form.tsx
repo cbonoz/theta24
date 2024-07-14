@@ -66,7 +66,10 @@ function CreatorForm() {
 		form.setValue("title", "CB Video productions");
 		form.setValue("handle", "cb-videos");
 		form.setValue("description", getPlaceholderDescription());
-		form.setValue("videoUrls", "https://www.youtube.com/watch?v=6ZfuNTqbHE8");
+		form.setValue(
+			"videoUrls",
+			"https://www.youtube.com/watch?v=6ZfuNTqbHE8,https://www.youtube.com/watch?v=TcMBFSGVi1c",
+		);
 	};
 
 	const clearForm = () => {
@@ -182,9 +185,12 @@ function CreatorForm() {
 							name="title"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Enter creator page name</FormLabel>
+									<FormLabel>Enter creator name</FormLabel>
 									<FormControl>
-										<Input placeholder={`Creator page name`} {...field} />
+										<Input
+											placeholder={`Creator page name that will be shown at the top of your page`}
+											{...field}
+										/>
 									</FormControl>
 									<FormDescription>Creator name</FormDescription>
 									<FormMessage />
@@ -198,11 +204,32 @@ function CreatorForm() {
 							name="description"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Enter description</FormLabel>
+									<FormLabel>Enter creator description</FormLabel>
 									<FormControl>
-										<Textarea placeholder="Describe the type of content you produce" {...field} />
+										<Textarea
+											placeholder="Describe the type of content you produce and why visitors should support you"
+											{...field}
+										/>
 									</FormControl>
 									<FormDescription>Creator description</FormDescription>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						{/* Videos */}
+						<FormField
+							control={form.control}
+							name="videoUrls"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Enter featured video urls separated by comma.</FormLabel>
+									<FormControl>
+										<Textarea rows={5} placeholder="Enter video urls" {...field} />
+									</FormControl>
+									<FormDescription>
+										Enter video urls to feature. These will be displayed on your creator page
+									</FormDescription>
 									<FormMessage />
 								</FormItem>
 							)}
@@ -212,6 +239,12 @@ function CreatorForm() {
 							{loading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
 							{!address ? "Connect wallet to continue" : "Create page"}
 						</Button>
+
+						{loading && (
+							<div className="mt-4 italic">
+								Do not leave this page until the transaction is confirmed.
+							</div>
+						)}
 					</form>
 				</Form>
 			)}
