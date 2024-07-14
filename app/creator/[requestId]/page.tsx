@@ -151,7 +151,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 		return <div className="flex flex-col items-center justify-center mt-8">Loading...</div>;
 	}
 
-	if (!address) {
+	if (!address && handle !== "demo") {
 		return (
 			<div className="flex flex-col items-center justify-center mt-8">
 				Please connect your wallet to view creator pages.
@@ -172,6 +172,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 	const hasData = !!data?.creatorName;
 	const currency = currentChain?.nativeCurrency?.symbol || "ETH";
+	const hasRequests = !isEmpty(data?.requests);
 
 	return (
 		// black background
@@ -206,18 +207,20 @@ export default function CreatorPage({ params }: { params: Params }) {
 					)}
 
 					{hasData && (
-						<div className="w-full mx-8">
+						<div className="w-full">
 							{data?.creatorName && (
-								<div>
-									<h2 className="text-2xl font-bold items-center justify-center">{getTitle()}</h2>
-									<p>{data?.creatorDescription}</p>
+								<div className="flex flex-col items-center justify-center">
+									{isOwner && <div className="italic text-xl">Owner View</div>}
+									<h2 className="text-4xl my-2 font-bold text-green-500 text-center">
+										{getTitle()}
+									</h2>
+									<p className="text-lg text-center font-bold">{data?.creatorDescription}</p>
 								</div>
 							)}
 
 							{/* Creator address */}
 							<div className="mt-4">
 								<div className="text-sm text-gray-500">Creator address</div>
-								<div>Donations will go to this address. Only donate to trusted creators.</div>
 								<Link
 									target="_blank"
 									className="text-sm hover:underline text-blue-500"
@@ -225,13 +228,16 @@ export default function CreatorPage({ params }: { params: Params }) {
 								>
 									{data.creatorAddress}
 								</Link>
+								<div>Donations will go to this address. Only donate to trusted creators.</div>
 							</div>
 
 							{/* https://ui.shadcn.com/docs/components/carousel */}
 
 							<div className="mt-4">
-								<h3 className="text-2xl font-bold">Video Requests</h3>
-								{isEmpty(data.requests) && <div>No requests yet</div>}
+								<h3 className="text-2xl font-bold">
+									Video Requests {hasRequests && <span>({data.requests.length})</span>}
+								</h3>
+								{!hasRequests && <div className="text-gray-500">No requests yet</div>}
 								<div>
 									{data.requests.map((request, index) => (
 										<div
@@ -271,7 +277,8 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 								{THETA_KEY && (
 									<div>
-										<div className="text-2xl font-bold">
+										<hr />
+										<div className="text-2xl font-bold mt-4">
 											Backup video to {currentChain?.name || "Edgecloud"}
 										</div>
 
@@ -300,14 +307,19 @@ export default function CreatorPage({ params }: { params: Params }) {
 										value={message}
 										onChange={(e) => setMessage(e.target.value)}
 									/>
+									<div className="text-sm text-gray-500">
+										Describe what video you would like this creator to make next!
+									</div>
 
 									{/* Donation */}
 									<Input
+										className="mt-4"
 										type="number"
 										placeholder="Donation in ETH"
 										value={donation}
 										onChange={(e) => setDonation(Number(e.target.value))}
 									/>
+									<div className="text-sm text-gray-500">Donation in {currency}</div>
 
 									<Button
 										className="mt-4"
