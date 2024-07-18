@@ -8,7 +8,7 @@ A smart contract mediated marketplace connecting creators with sponsors/supporte
 
 Going for the Real world applications and finance category of https://theta2024.devpost.com/
 
-Live Demo URL (deployed with Theta Testnet): https://creatorpage.vercel.app
+Live Demo URL (deployed with Theta Testnet): https://creatorpagebeta.vercel.app
 
 Demo video (YouTube ~3 minutes):
 
@@ -28,9 +28,9 @@ With CreatorPage, creators can showcase their projects and connect with sponsors
 
 Contract: https://testnet-explorer.thetatoken.org/address/0xA3ED761e2447589081F413c0f78D8fe3f68793fD
 
-Creator page: https://creatorpage.vercel.app/creator/cb-videos
+Creator page: https://creatorpagebeta.vercel.app/creator/cb-videos
 
-Creator page demo (no wallet connection required): https://creatorpage.vercel.app/creator/demo
+Creator page demo (no wallet connection required): https://creatorpagebeta.vercel.app/creator/demo
 
 ### Example use case
 
