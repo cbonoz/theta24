@@ -1,5 +1,5 @@
 <p align='center'>
-    <img src='https://i.ibb.co/yqZzy48/logo.png' width=400 />
+    <img src='https://i.ibb.co/8NndGYC/logo.png' width=400 />
 </p>
 
 ## CreatorPage
@@ -10,23 +10,24 @@ Going for the Real world applications and finance category of https://theta2024.
 
 Live Demo URL (deployed with Theta Testnet): https://creatorpagebeta.vercel.app
 
+Main Contract for demo above: https://testnet-explorer.thetatoken.org/address/0xA3ED761e2447589081F413c0f78D8fe3f68793fD
+
 Demo video (YouTube ~3 minutes):
 
 ### Inspiration
 
-Connecting creators with sponsors can be challenging due to trust issues and the need for transparent, secure transactions. Video platforms like twitch exist, but often these platforms work retroactively i.e. the creator is producing content and the viewers are supporting.
+The inspiration for CreatorPage stemmed from the challenges creators face in connecting with sponsors due to trust issues and the need for transparent transactions. Existing video platforms like Twitch and Patreon usually operate retroactively, requiring creators to produce content before receiving support. These platforms also demand significant engineering resources as well. We envisioned a solution using Theta blockchain that allows creators to build portfolio pages and collect donations via smart contracts, ensuring immediate, secure transactions and automating content request responses.
 
-These platforms also frequently require large engineering teams to maintain.
+One limitation for supporters is that Patreon charges a service fee ranging from 5% to 12% of the creator’s earnings, plus payment processing fees. Additionally, payouts can take several days to process. Creators are dependent on Patreon’s policies and terms of service. Changes in these policies can negatively impact creators’ income and the way they interact with their supporters. Twitch takes a significant cut of revenue from subscriptions, Bits, and ads, often leaving creators with a smaller portion of their earnings. Additionally, the platform’s high competition makes it difficult for new creators to gain visibility. CreatorPage offers a more favorable revenue model by utilizing blockchain technology, allowing creators to keep a larger share of their earnings. The decentralized nature also helps reduce reliance on platform algorithms for visibility. Twitch has strict moderation policies and content restrictions that can result in bans or demonetization, sometimes unpredictably. Smart contracts enable a more transparent and consistent approach to moderation, reducing the risk of sudden bans or content takedowns.
 
-We wanted to create a system using Theta that enabled anyone to create their own portfolio page and collect donations compeltely facilitated by a smart contract without requiring any intermediary servers.
 
-When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request. The creator is allowed to auto-generate a script for any incoming request using Theta LLM.
+When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request. The creator is allowed to auto-generate a script for any incoming request using Theta LLMs on EdgeCloud.
 
-With CreatorPage, creators can showcase their projects and connect with sponsors without revealing sensitive financial information. Smart contracts ensure that videos are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
+With CreatorPage, creators can showcase their projects and connect with supporters without revealing sensitive financial information. Smart contracts ensure that transactions are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
 
-### Example creator page
 
-Contract: https://testnet-explorer.thetatoken.org/address/0xA3ED761e2447589081F413c0f78D8fe3f68793fD
+### Example creator pages
+
 
 Creator page: https://creatorpagebeta.vercel.app/creator/cb-videos
 
@@ -35,24 +36,26 @@ Creator page demo (no wallet connection required): https://creatorpagebeta.verce
 ### Example use case
 
 * **Creators:**
-    * Post project ideas with their connected address to begin receiving video requests.
-    * Add existing videos in a portfolio carousel
-    * Get a dedicated url with unique handle that can be shared on the creators existing social media accounts.
+    * Post their portfolio page with their connected address to begin receiving video requests.
+    * Add existing videos in a portfolio carousel featuring their latest videos.
+    * Get a dedicated url with unique handle that can be shared on the creator's existing social media accounts without the need for new accounts.
 
-* **Sponsors:**
+* **Supporters:**
     * Browse through various creator pages and select ones to sponsor.
     * Make a donation with a video request that gets displayed on the creator page.
-    * Creators can auto generate scripts for requests using CreatorPage LLM.
+    * Creators can generate video scripts for their supporters' requests using the CreatorPage LLM.
 
-When the sponsorship is completed, a blockchain event is emitted with information about the transaction. This event can be listened to on other networks or blockchain platforms (or for indexing on `the Graph`).
+When the sponsorship is completed, a blockchain event is emitted with information about the transaction. This event can be listened to on other networks, blockchain platforms, or event indexing platforms like <a href="https://thegraph.com/" target="_blank">the Graph</a>.
 
 ### Technologies used
 
-**Theta Metachain (testnet)**: This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows.
+**Theta Metachain (testnet)**: This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows. Every donation and supporter request is indexed on a smart contract that becomes preserved for other creators and platforms to search.
 
-**Theta Gemma 2B**;
+**Theta Gemma 2B**: Deployed LLM that can only be requested using requests from supporters. This provides an additional incentive for creators and supporters to engage on pages and make donations.
 
-**Theta Video management API**:
+**Theta Video management API**: Creators can back up all their video content to Theta Cloud directly from the CreatorPage app when they are connected with the address associated with the creator page creation.
+
+creatorpagebeta.vercel.app is also an open source project build on NextJS. Build and deploy an instance of this app yourself.
 
 ### Updating the smart contract
 
@@ -70,15 +73,24 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 
 The app should now be running on port 3000.
 
-3.  Go to localhost:3000/admin. Deploy a new instance of the `CreatorContract` - make a note of the deployed address.
+3.  Go to `localhost:3000/admin`. Deploy a new instance of the `CreatorContract` - make a note of the deployed address.
 
-4. Update the contract address from step (3) in `.env`. Restart the server.
+4. Update the contract address from step (3) in `.env`. Restart the web server.
 
 5. Rebuild and redeploy the project. The app should now be using the updated contract code with a new primary app contract address.
 
 ### Potential future work
 
+1. Enhanced Smart Contract Features: Develop advanced functionalities such as milestone-based payouts, recurring subscriptions, and custom donation tiers to provide more flexible financial management options for creators.
+2. Advanced Analytics and Insights: Implement comprehensive analytics tools with real-time dashboards, detailed reports, and predictive analytics to help creators make data-driven decisions.
+3. Community Engagement Features: Add discussion forums, live Q&A sessions, collaborative project spaces, and gamification elements like badges and leaderboards to foster stronger community interaction.
+4. Partnerships and Integrations: Forge partnerships with other platforms and services (e.g., social media, marketing tools, merchandise providers) and integrate APIs to offer creators additional resources and opportunities for monetization and promotion.
+5. Localized Versions and Multilingual Support: Develop localized versions of the platform with multilingual support to cater to a global audience, making it accessible to creators and supporters from different regions and language backgrounds.
+
 ### Useful links
+
+* https://theta2024.devpost.com/
+* https://docs.thetatoken.org/docs/theta-edgecloud-overview
 
 # Image gallery
 
@@ -90,11 +102,11 @@ The app should now be running on port 3000.
 
 ![About](./img/about.png)
 
-## Creating a new sponsorship request
+## Creating a new creator page (sponsorship page)
 
 ![Create](./img/create.png)
 
-## Request created
+## Page created
 
 ![Created](./img/created.png)
 
@@ -102,11 +114,11 @@ The app should now be running on port 3000.
 
 ![Error](./img/error.png)
 
-## Access error (not designated recipient)
+## Example Video upload (creator only)
 
-![Error](./img/access.png)
+![Filecoin IPFS Upload](./img/filecoin_ipfs_upload.png)
 
-## Example Filecoin IPFS Upload
+## Example Video upload (creator only)
 
 ![Filecoin IPFS Upload](./img/filecoin_ipfs_upload.png)
 
@@ -117,4 +129,5 @@ The app should now be running on port 3000.
 ## Smart Contract code sample
 
 ![Contract](./img/contract.png)
+
 ## Home

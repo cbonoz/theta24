@@ -8,6 +8,7 @@ import { Providers } from './providers'
 import { headers } from 'next/headers'
 import { cookieToInitialState } from 'wagmi'
 import { config } from './config'
+import { Footer } from '@/components/site-footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
@@ -22,7 +23,12 @@ export default function RootLayout({
             <Providers initialState={initialState}>
                 <body className={inter.className}>
                     <NavHeader />
-                    <div>{children}</div>
+                    <div className="flex flex-col min-h-screen">
+
+                    <main className="flex-grow">
+                    {children}</main>
+                    </div>
+                    <Footer/>
                 </body>
             </Providers>
         </html>

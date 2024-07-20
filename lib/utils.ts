@@ -49,7 +49,11 @@ export const getReadableError = (err: any) => {
 	} else if (err instanceof Error) {
 		return JSON.stringify(err);
 	}
-	return err || "Unknown error";
+	const errorMessage = (err?.info?.message || err?.info || err?.message || err || 'Unknown Error') + '';
+	if (errorMessage.indexOf('network changed')) {
+		return 'Network changed. Please ensure you are connected to the Theta network.';
+	}
+	return errorMessage
 };
 
 export const formatDate = (d: Date | string | number | undefined, onlyDate?: boolean) => {
