@@ -108,3 +108,8 @@ export const getIpfsUrl = (cid: string) => {
 export const ethToWei = (amount: any) => {
 	return ethers.parseEther(amount + "");
 };
+
+export const weiToEth = (amount: any) => {
+	return ethers.formatEther(amount);
+}
+

@@ -93,6 +93,13 @@ export default function CreatorPage({ params }: { params: Params }) {
 	const signer = useEthersSigner({ chainId });
 	const isOwner = data?.creatorAddress === address;
 
+	// Log data on change
+	useEffect(() => {
+		if (data) {
+			console.log("contract data", data);
+		}
+	}, [data]);
+
 	async function getGeneratedScript(request: VideoRequest) {
 		setScriptLoading(true);
 		try {
@@ -112,13 +119,6 @@ export default function CreatorPage({ params }: { params: Params }) {
 		setSendLoading(true);
 		setError(null);
 		try {
-			// const res = await writeContract(config, {
-			// 	abi: CREATOR_CONTRACT.abi,
-			// 	address: siteConfig.masterAddress as Address,
-			// 	functionName: "makeRequest",
-			// 	args: [handle, message],
-			// });
-
 			const res = await requestVideo(signer, handle, message, donation);
 
 			console.log("makeVideoRequest", res, handle, message);
@@ -282,11 +282,11 @@ export default function CreatorPage({ params }: { params: Params }) {
 													Donated by: {request.requester}
 												</Link>
 												{/* time */}
-												<div className="text-xs text-gray-500">{formatDate(request.createdAt)}</div>
+												<div className="text-xs text-gray-500">Donated at: {request.createdAt}</div>
 											</div>
-											<div className="flex items-center space-x-4">
+											<div className="flex items-center space-x-4 ml-2">
 												<Button
-													className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+													className="bg-blue-500 text-white ml-2 px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
 													onClick={() => getGeneratedScript(request)}
 												>
 													Generate Script
@@ -325,7 +325,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 							{!isOwner && (
 								<div>
-									<div className="text-2xl font-bold">Add a video request</div>
+									<div className="text-2xl font-bold">Add a new video request</div>
 									<div className="italic">
 										Video requests will be received by the creator via a smart contract transaction.
 									</div>
@@ -342,9 +342,9 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 									{/* Donation */}
 									<Input
-										className="mt-4"
+										className="mt-4 max-w-xs"
 										type="number"
-										placeholder="Donation in ETH"
+										placeholder={`Donation in ${currency}`}
 										value={donation}
 										onChange={(e) => setDonation(Number(e.target.value))}
 									/>

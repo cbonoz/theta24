@@ -255,12 +255,14 @@ function CreatorForm() {
           </Button> */}
 
 					{/* center align */}
-					<div className="flex flex-col items-center  mt-8">
+					<div className="flex flex-col items-center  mt-8 ">
 						<svg
 							width="128"
 							height="128"
 							viewBox="0 0 15 15"
 							fill="none"
+							color="green"
+							className='text-green-500'
 							xmlns="http://www.w3.org/2000/svg"
 						>
 							<path

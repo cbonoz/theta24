@@ -1,5 +1,5 @@
 import { CREATOR_CONTRACT } from "./metadata";
-import { ethToWei, formatDate } from "../utils";
+import { ethToWei, formatDate, weiToEth } from "../utils";
 import { ethers } from "ethers";
 import { ContractMetadata, VideoRequest } from "../types";
 import { siteConfig } from "@/util/site-config";
@@ -26,6 +26,10 @@ export const processMetadata = (result: any[], allowInvalid?: boolean): Contract
 	return metadata;
 };
 
+function numberToDate(n: any) {
+	return formatDate(Number(n) * 1000);
+}
+
 export const processMetadataObject = (
 	result: ContractMetadata | undefined,
 ): ContractMetadata | undefined => {
@@ -35,16 +39,21 @@ export const processMetadataObject = (
 	const initialVideoUrls = (result.initialVideoUrls || "")
 		.split(",")
 		.map((url: string) => url.trim());
-	const createdAt = formatDate(Number(result.createdAt) * 1000);
 	const metadata = {
 		handle: result.handle,
 		creatorName: result.creatorName,
 		creatorDescription: result.creatorDescription,
 		initialVideoUrls,
 		creatorAddress: result.creatorAddress,
-		requests: result.requests.filter((r: VideoRequest) => !!r.createdAt),
+		requests: result.requests.filter((r: VideoRequest) => !!r.createdAt).map((r: VideoRequest) => {
+			return {
+				...r,
+				donation: weiToEth(r.donation),
+				createdAt: numberToDate(r.createdAt),
+			};
+		}),
 		active: result.active,
-		createdAt,
+		createdAt: numberToDate(result.createdAt),
 		isValue: result.isValue,
 	};
 
@@ -88,7 +97,7 @@ export const requestVideo = async (
 	donation: number,
 ): Promise<any> => {
 	const contract = new ethers.Contract(siteConfig.masterAddress, CREATOR_CONTRACT.abi, signer);
-	const body = { value: ethToWei(donation), gasLimit: "100000" };
+	const body = { value: ethToWei(donation), gasLimit: "1000000" };
 	console.log("makeRequest", body);
 	const tx = await contract.makeRequest(handle, message, body);
 

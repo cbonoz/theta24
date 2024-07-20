@@ -3,8 +3,6 @@ pragma solidity ^0.8.19;
 
 contract CreatorContract {
 
-    // Struct to represent a video request
-    uint256 constant LATEST_REQUESTS = 10;
 
     struct Request {
         address requester;
@@ -20,12 +18,12 @@ contract CreatorContract {
         string creatorDescription;
         string initialVideoUrls;
         address creatorAddress;
-        Request[LATEST_REQUESTS] requests;
+        Request[] requests;
         bool active;
         uint createdAt;
         bool isValue;
         uint256 requestCount;
-        uint256 oldestRequestIndex;
+        Request lastRequest;
     }
 
     // owner
@@ -36,6 +34,8 @@ contract CreatorContract {
 
     // map from handle to metadata
     mapping(string => Metadata) private creatorMap;
+    mapping(string => Request[]) private handleToRequestMap;
+    mapping(string => Request) private handleToLastRequest;
 
     event HandleCreated(string handle);
     event VideoUploaded(address verifier, string video, string description);
@@ -70,9 +70,9 @@ contract CreatorContract {
         return creatorMap[_handle];
     }
 
-    function makeRequest(string memory _handle, string memory _message) public payable returns (Metadata memory) {
+    function makeRequest(string memory _handle, string memory _message) public payable {
         Metadata storage creator = creatorMap[_handle];
-        require(!creator.isValue, "A creator page for this handle already exists");
+        require(creator.isValue, "A creator page for this handle does not exist");
 
         address requester = msg.sender;
         uint donation = msg.value;
@@ -81,29 +81,17 @@ contract CreatorContract {
         require(msg.sender != creator.creatorAddress, "Creator cannot request their own video");
 
         if (donation > 0) {
-            address payable creatorAddress = payable(creator.creatorAddress);
-            creatorAddress.transfer(donation);
+            payable(creator.creatorAddress).transfer(donation);
         }
-
-       // Update values on the request
-        creator.requests[creator.oldestRequestIndex].requester = requester;
-        creator.requests[creator.oldestRequestIndex].message = _message;
-        creator.requests[creator.oldestRequestIndex].donation = donation;
-        creator.requests[creator.oldestRequestIndex].createdAt = block.timestamp;
-
-        // Update the oldest request index
-        creator.oldestRequestIndex = (creator.oldestRequestIndex + 1) % LATEST_REQUESTS;
-
-        // If the request count is less than LATEST_REQUESTS, increment it
-        if (creator.requestCount < LATEST_REQUESTS) {
-            creator.requestCount++;
-        }
-
-        creatorMap[_handle] = creator;
 
         // emit event
         emit VideoRequest(requester, _handle, _message, donation);
-        return metadata;
+
+        Request[] storage requests = handleToRequestMap[_handle];
+        Request memory request = Request(requester, _message, donation, block.timestamp);
+        requests.push(request);
+        handleToRequestMap[_handle] = requests;
+        handleToLastRequest[_handle] = request;
     }
 
     function makeUpload(string memory _handle, string memory _contentId, string memory _description) public returns (Metadata memory) {
@@ -121,11 +109,14 @@ contract CreatorContract {
     function getMetadataForHandle(string memory _handle) public view returns (Metadata memory) {
         // Verify handle exists
         require(creatorMap[_handle].isValue, "Creator page does not exist");
-        return creatorMap[_handle];
+        return getMetadataUnchecked(_handle);
     }
 
     function getMetadataUnchecked(string memory _handle) public view returns (Metadata memory) {
-        return creatorMap[_handle];
+        Metadata memory creator = creatorMap[_handle];
+        creator.requests = handleToRequestMap[_handle];
+        creator.lastRequest = handleToLastRequest[_handle];
+        return creator;
     }
 
     // get owner

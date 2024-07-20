@@ -10,7 +10,7 @@ Built for the <a href="https://theta2024.devpost.com/" target="_blank">Theta hac
 
 Live Demo URL (deployed with Theta Testnet): https://creatorpagebeta.vercel.app
 
-Main Contract for demo above: https://testnet-explorer.thetatoken.org/address/0xA3ED761e2447589081F413c0f78D8fe3f68793fD
+Main Contract for demo above: https://testnet-explorer.thetatoken.org/address/0x13662e769FAaB0DD41890E37ABb2bD0539693D73
 
 Demo video (YouTube ~3 minutes):
 
