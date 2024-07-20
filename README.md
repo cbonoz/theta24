@@ -20,7 +20,9 @@ The inspiration for CreatorPage stemmed from the challenges creators face in con
 
 One limitation for supporters is that Patreon charges a service fee ranging from 5% to 12% of the creator’s earnings, plus payment processing fees. Additionally, payouts can take several days to process. Creators are dependent on Patreon’s policies and terms of service. Changes in these policies can negatively impact creators’ income and the way they interact with their supporters. Twitch takes a significant cut of revenue from subscriptions, Bits, and ads, often leaving creators with a smaller portion of their earnings. Additionally, the platform’s high competition makes it difficult for new creators to gain visibility. CreatorPage offers a more favorable revenue model by utilizing blockchain technology, allowing creators to keep a larger share of their earnings. The decentralized nature also helps reduce reliance on platform algorithms for visibility. Twitch has strict moderation policies and content restrictions that can result in bans or demonetization, sometimes unpredictably. Smart contracts enable a more transparent and consistent approach to moderation, reducing the risk of sudden bans or content takedowns.
 
-When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request. The creator is allowed to auto-generate a script for any incoming request using Theta LLMs on EdgeCloud.
+### How it works
+
+When a request is received, the owner of the page immediately receives the donation and an event is emitted from the smart contract with information about the request. The creator is allowed to auto-generate a script for any incoming request using Theta LLMs on EdgeCloud. The handle specified is checked for existence and if it's available, creates a record on the master contract with the metadata and ledger of donations to that creator.
 
 With CreatorPage, creators can showcase their projects and connect with supporters without revealing sensitive financial information. Smart contracts ensure that transactions are securely managed, with users able to visit the page and make donations alongside specific video or content requests.
 
@@ -31,14 +33,14 @@ Creator page: https://creatorpagebeta.vercel.app/creator/cb-videos
 
 Creator page demo (no wallet connection required): https://creatorpagebeta.vercel.app/creator/demo
 
-Make your own: https://creatorpagebeta.vercel.app/upload
+Make your own page: https://creatorpagebeta.vercel.app/upload
 
 ### Example use case
 
 * **Creators:**
     * Post their portfolio page with their connected address to begin receiving video requests.
     * Add existing videos in a portfolio carousel featuring their latest videos.
-    * Get a dedicated url with unique handle that can be shared on the creator's existing social media accounts without the need for new accounts.
+    * Get a dedicated url per page with a unique handle that can be shared on the creator's existing social media accounts without the need for new accounts.
 
 * **Supporters:**
     * Browse through various creator pages and select ones to sponsor.
@@ -49,13 +51,13 @@ When the sponsorship is completed, a blockchain event is emitted with informatio
 
 ### Technologies used
 
-**Theta Metachain (testnet)**: This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when listing is completed can be used to trigger separate blockchain-specific workflows. Every donation and supporter request is indexed on a smart contract that becomes preserved for other creators and platforms to search.
+**Theta Metachain (testnet)**: This app was deployed and supports Theta Testnet. Depending on the use case, the event fired from the contract when the listing is completed can be used to trigger separate blockchain-specific workflows. Every donation and supporter request is indexed on a smart contract that becomes preserved for other creators and platforms to search.
 
 **Theta Gemma 2B**: Deployed LLM that can only be requested using requests from supporters. This provides an additional incentive for creators and supporters to engage on pages and make donations.
 
 **Theta Video management API**: Creators can back up all their video content to Theta Cloud directly from the CreatorPage app when they are connected with the address associated with the creator page creation.
 
-CreatorPage is an open source project build on NextJS. Build and deploy an instance of this app yourself.
+CreatorPage is an open source project built on NextJS. Build and deploy an instance of this app yourself.
 
 ### Updating the smart contract
 

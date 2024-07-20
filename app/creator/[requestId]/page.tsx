@@ -41,12 +41,11 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { generateVideoRequestScript } from "@/lib/generate-script";
+import { generateVideoRequestScript } from "@/util/theta-generate";
 import { processMetadataObject, requestVideo } from "@/lib/contract/interact";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@radix-ui/react-select";
 import { Input } from "@/components/ui/input";
-import { FormControl } from "@/components/ui/form";
 import Link from "next/link";
 import VideoDropzone from "@/components/video-dropzone";
 import { THETA_KEY, thetaUpload } from "@/util/theta-upload";
