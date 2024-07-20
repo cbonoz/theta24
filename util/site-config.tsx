@@ -46,7 +46,7 @@ export const siteConfig = {
 		{
 			title: "Create",
 			description:
-				"Creators post their project ideas, specifying the type of content and required sponsorship. They can auto-generate scripts for incoming requests using Theta LLM.",
+				"Creators post their past projects to create a shareable portfolio page.",
 		},
 		{
 			title: "Connect",
@@ -55,7 +55,7 @@ export const siteConfig = {
 		},
 		{
 			title: "Collaborate",
-			description: "Creators and supporters collaborate to bring the project to life.",
+			description: "Creators and supporters collaborate to bring the project to life. Creators can auto-generate scripts for sent requests using Theta LLM.",
 		},
 	],
 };

@@ -99,7 +99,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 			const prompt = request.message;
 			const res = await generateVideoRequestScript(prompt);
 			console.log("generateScript", res, handle, prompt);
-			setGeneratedScript({ script: res, request });
+			setGeneratedScript({ response: res, request });
 		} catch (error) {
 			console.log("error generating script", error);
 			setError(getReadableError(error));
@@ -390,10 +390,10 @@ export default function CreatorPage({ params }: { params: Params }) {
 						}
 					}}
 				>
-					<DialogContent>
+					<DialogContent className="max-w-lg">
 						<DialogHeader>
-							<DialogTitle>Generated script for {generatedScript?.request?.message}</DialogTitle>
-							<DialogDescription>{generatedScript?.script}</DialogDescription>
+							<DialogTitle>Generated script from supporter: '{generatedScript?.request?.message}'</DialogTitle>
+							<DialogDescription>{generatedScript?.response?.script}</DialogDescription>
 						</DialogHeader>
 					</DialogContent>
 				</Dialog>
