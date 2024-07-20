@@ -286,9 +286,11 @@ export default function CreatorPage({ params }: { params: Params }) {
 											</div>
 											<div className="flex items-center space-x-4 ml-2">
 												<Button
-													className="bg-blue-500 text-white ml-2 px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+													className="bg-blue-500 text-white ml-2 px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:pointer"
+													disabled={scriptLoading}
 													onClick={() => getGeneratedScript(request)}
 												>
+													{scriptLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
 													Generate Script
 												</Button>
 												{/* <a href="#" className="text-blue-500 text-sm hover:underline">
@@ -382,7 +384,10 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 					{error && <div className="mt-2 text-red-500">{error}</div>}
 				</BasicCard>
-				<Dialog
+				{/* Enable scroll */}
+
+				<Dialog	
+			
 					open={!!generatedScript?.request}
 					onOpenChange={(open) => {
 						if (!open) {
@@ -390,10 +395,14 @@ export default function CreatorPage({ params }: { params: Params }) {
 						}
 					}}
 				>
-					<DialogContent className="max-w-lg">
+					<DialogContent className="max-w-lg max-h-lg overflow-y-scroll">
 						<DialogHeader>
 							<DialogTitle>Generated script from supporter: '{generatedScript?.request?.message}'</DialogTitle>
-							<DialogDescription>{generatedScript?.response?.script}</DialogDescription>
+							<DialogDescription>
+								{/* preformat */}
+								<div className="whitespace-pre-line  max-w-lg max-h-[600px] overflow-y-scroll">
+								{generatedScript?.response?.script}</div>
+								</DialogDescription>
 						</DialogHeader>
 					</DialogContent>
 				</Dialog>
