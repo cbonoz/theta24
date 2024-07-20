@@ -3,7 +3,6 @@ pragma solidity ^0.8.19;
 
 contract CreatorContract {
 
-
     // Struct to represent a video request
     uint256 constant LATEST_REQUESTS = 10;
 
@@ -86,13 +85,7 @@ contract CreatorContract {
             creatorAddress.transfer(donation);
         }
 
-        // Request memory request = Request({
-        //     requester: requester,
-        //     message: _message,
-        //     donation: donation,
-        //     createdAt: block.timestamp
-        // });
-       // Update values directly on index individually
+       // Update values on the request
         creator.requests[creator.oldestRequestIndex].requester = requester;
         creator.requests[creator.oldestRequestIndex].message = _message;
         creator.requests[creator.oldestRequestIndex].donation = donation;

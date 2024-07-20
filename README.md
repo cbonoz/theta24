@@ -110,24 +110,10 @@ The app should now be running on port 3000.
 
 ![Created](./img/created.png)
 
-## Insufficient video error
+## Smart Contract (page representation)
 
-![Error](./img/error.png)
+![Contract](./img/contract1.png)
 
-## Example Video upload (creator only)
+## Smart Contract (making a request)
 
-![Filecoin IPFS Upload](./img/filecoin_ipfs_upload.png)
-
-## Example Video upload (creator only)
-
-![Filecoin IPFS Upload](./img/filecoin_ipfs_upload.png)
-
-## Verified
-
-![Verified](./img/verified.png)
-
-## Smart Contract code sample
-
-![Contract](./img/contract.png)
-
-## Home
+![Contract](./img/contract2.png)
