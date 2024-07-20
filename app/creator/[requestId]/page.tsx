@@ -21,7 +21,12 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Address, Chain, createPublicClient, http } from "viem";
-import { writeContract } from "@wagmi/core";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import {
 	useAccount,
@@ -313,9 +318,14 @@ export default function CreatorPage({ params }: { params: Params }) {
 										<div className="mt-4">
 											<VideoDropzone onUpload={onUpload} />
 											{videoResult && (
-												<div>
-													<RenderObject title="Video Uploaded!" obj={videoResult} />
-												</div>
+												<Accordion type="single" collapsible className="w-full">
+													<AccordionItem value="item-1">
+														<AccordionTrigger>Video Uploaded!</AccordionTrigger>
+														<AccordionContent>
+															<RenderObject title="" obj={videoResult} />
+														</AccordionContent>
+													</AccordionItem>
+												</Accordion>
 											)}
 										</div>
 									</div>
@@ -368,13 +378,6 @@ export default function CreatorPage({ params }: { params: Params }) {
 						</div>
 					)}
 
-					{/* {isOwner && (
-					<div>
-						<div>Creator actions</div>
-						<div>Upload video (Coming soon)</div>
-					</div>
-				)} */}
-
 					{result && (
 						<div className="mt-4">
 							<h3 className="text-lg font-bold">Result</h3>
@@ -386,8 +389,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 				</BasicCard>
 				{/* Enable scroll */}
 
-				<Dialog	
-			
+				<Dialog
 					open={!!generatedScript?.request}
 					onOpenChange={(open) => {
 						if (!open) {
@@ -397,12 +399,15 @@ export default function CreatorPage({ params }: { params: Params }) {
 				>
 					<DialogContent className="max-w-lg max-h-lg overflow-y-scroll">
 						<DialogHeader>
-							<DialogTitle>Generated script from supporter: '{generatedScript?.request?.message}'</DialogTitle>
+							<DialogTitle>
+								Generated script from supporter: '{generatedScript?.request?.message}'
+							</DialogTitle>
 							<DialogDescription>
 								{/* preformat */}
 								<div className="whitespace-pre-line  max-w-lg max-h-[600px] overflow-y-scroll">
-								{generatedScript?.response?.script}</div>
-								</DialogDescription>
+									{generatedScript?.response?.script}
+								</div>
+							</DialogDescription>
 						</DialogHeader>
 					</DialogContent>
 				</Dialog>
