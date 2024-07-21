@@ -71,6 +71,15 @@ CreatorPage is an open source project built on NextJS. Build and deploy an insta
 
 1. Fill in values in `.env.sample` with the exception of the contract address, copy to a new file `.env`. The contract address for the deployment will be specified in a later step.
 
+<pre>
+NEXT_PUBLIC_ADMIN_ADDRESS= // deployer address for website
+NEXT_PUBLIC_CONTRACT_ADDRESS= // main smart contract deployment address
+NEXT_PUBLIC_OPEN_API_KEY= // OpenAI API key for Theta LLM invocation
+NEXT_PUBLIC_THETA_API_URL= // Theta API url for LLM invocation
+NEXT_PUBLIC_THETA_SECRET= // Theta video API secret for content upload
+NEXT_PUBLIC_THETA_KEY= // Theta video API key for content upload
+</pre>
+
 2. `yarn; yarn dev`
 
 The app should now be running on port 3000.
