@@ -220,7 +220,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 				<BasicCard
 					title={""}
 					// description="Find and find a creator page using your wallet."
-					className="max-w-[1000px] p-4"
+					className="max-w-[1000px] px-4 mb-4 mt-4"
 				>
 					{invalid && (
 						<div className="font-bold text-red-500">
@@ -308,7 +308,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 									))}
 								</div>
 
-								{THETA_KEY && isOwner && (
+								{THETA_KEY && !isOwner && (
 									<div>
 										<hr />
 										<div className="text-2xl font-bold mt-4">
@@ -320,7 +320,9 @@ export default function CreatorPage({ params }: { params: Params }) {
 											{videoResult && (
 												<Accordion type="single" collapsible className="w-full">
 													<AccordionItem value="item-1">
-														<AccordionTrigger>Video Uploaded!</AccordionTrigger>
+														<AccordionTrigger className="text-green-500">
+															Video Uploaded!
+														</AccordionTrigger>
 														<AccordionContent>
 															<RenderObject title="" obj={videoResult} />
 														</AccordionContent>
@@ -337,42 +339,51 @@ export default function CreatorPage({ params }: { params: Params }) {
 
 							{!isOwner && (
 								<div>
-									<div className="text-2xl font-bold">Add a new video request</div>
-									<div className="italic">
-										Video requests will be received by the creator via a smart contract transaction.
-									</div>
+									<Accordion type="single" collapsible className="w-full">
+										<AccordionItem value="item-2">
+											<AccordionTrigger>
+												<div className="text-2xl font-bold">Add a new video request</div>
+											</AccordionTrigger>
+											<AccordionContent>
+												<div className="italic">
+													Video requests will be received by the creator via a smart contract
+													transaction.
+												</div>
 
-									<Textarea
-										className="w-full mt-2"
-										placeholder="Enter your message"
-										value={message}
-										onChange={(e) => setMessage(e.target.value)}
-									/>
-									<div className="text-sm text-gray-500">
-										Describe what video you would like this creator to make next!
-									</div>
+												<Textarea
+													className="w-full mt-2"
+													placeholder="Enter your message"
+													value={message}
+													onChange={(e) => setMessage(e.target.value)}
+												/>
+												<div className="text-sm text-gray-500">
+													Describe what video you would like this creator to make next!
+												</div>
 
-									{/* Donation */}
-									<Input
-										className="mt-4 max-w-xs"
-										type="number"
-										placeholder={`Donation in ${currency}`}
-										value={donation}
-										onChange={(e) => setDonation(Number(e.target.value))}
-									/>
-									<div className="text-sm text-gray-500">Donation in {currency}</div>
+												{/* Donation */}
+												<Input
+													className="mt-4 max-w-xs"
+													type="number"
+													placeholder={`Donation in ${currency}`}
+													value={donation}
+													onChange={(e) => setDonation(Number(e.target.value))}
+												/>
+												<div className="text-sm text-gray-500">Donation in {currency}</div>
 
-									<Button
-										className="mt-4"
-										onClick={() => {
-											setSendLoading(true);
-											makeVideoRequest();
-										}}
-										disabled={sendLoading}
-									>
-										{sendLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-										Send request
-									</Button>
+												<Button
+													className="mt-4"
+													onClick={() => {
+														setSendLoading(true);
+														makeVideoRequest();
+													}}
+													disabled={sendLoading}
+												>
+													{sendLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+													Send request
+												</Button>
+											</AccordionContent>
+										</AccordionItem>
+									</Accordion>
 								</div>
 							)}
 						</div>

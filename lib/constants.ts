@@ -1,4 +1,5 @@
 import { ContractMetadata, CreatorPageData } from "./types";
+import { formatDate } from "./utils";
 
 export const DEMO_REQUEST: CreatorPageData = {
 	handle: "cb-videos",
@@ -21,6 +22,7 @@ export const DEMO_METADATA: ContractMetadata = {
 			donation: "100",
 			message: "I want a video on dogs",
 			requester: "0xaab58c7fD4246C8F5cA950f25De5Cd6Df5F56624",
+			createdAt: formatDate(new Date()),
 		},
 	],
 	active: true,
@@ -74,4 +76,4 @@ Text on Screen: “Rex – The Employee of the Month... Every Month!”
 End of Video
 
 This script showcases a humorous scenario of a dog going through a job interview, highlighting his unique skills and characteristics in a funny and endearing way.
-`
+`;
