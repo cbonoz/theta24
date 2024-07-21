@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
-const Sign = () => {
+const Creator = () => {
     const [requestId, setRequestId] = useState<string>('')
     const router = useRouter()
 
@@ -37,4 +37,4 @@ const Sign = () => {
     )
 }
 
-export default Sign
+export default Creator

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const siteConfig = {
 	title: "CreatorPage",
-	description: "A smart contract mediated marketplace connecting creators with supports",
+	description: "A smart contract mediated portfolio platform connecting creators with supporters",
 	isLocal: process.env.NEXT_PUBLIC_ENV === "development",
 	masterAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
 	admin: {
@@ -11,10 +11,10 @@ export const siteConfig = {
 			"The admin page contains information for managing creator and sponsor interactions.",
 	},
 	valueSentences: [
-        'Smart contract backed portfolio pages for content creators and their fans',
-        'Automatically generate and manage video scripts using Theta LLMs',
-        'No vendor agreements required',
-    ],
+		"Smart contract backed portfolio pages for content creators and their fans",
+		"Automatically generate and manage video scripts using Theta LLMs",
+		"No vendor agreements required",
+	],
 	about: [
 		{
 			title: "What is CreatorPage?",
@@ -45,8 +45,7 @@ export const siteConfig = {
 	steps: [
 		{
 			title: "Create",
-			description:
-				"Creators post their past projects to create a shareable portfolio page.",
+			description: "Creators post their past projects to create a shareable portfolio page.",
 		},
 		{
 			title: "Connect",
@@ -55,7 +54,8 @@ export const siteConfig = {
 		},
 		{
 			title: "Collaborate",
-			description: "Creators and supporters collaborate to bring the project to life. Creators can auto-generate scripts for sent requests using Theta LLM.",
+			description:
+				"Creators and supporters collaborate to bring the project to life. Creators can auto-generate scripts for sent requests using Theta LLM.",
 		},
 	],
 };
