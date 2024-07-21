@@ -12,13 +12,15 @@ Live Demo URL (deployed with Theta Testnet): https://creatorpagebeta.vercel.app
 
 Main Contract for demo above: https://testnet-explorer.thetatoken.org/address/0x13662e769FAaB0DD41890E37ABb2bD0539693D73
 
-Demo video (YouTube ~3 minutes):
+Demo video (YouTube ~4.5 minutes): https://youtu.be/viYsOhh_xLU
+
+Theta portal/deployment: https://www.thetaedgecloud.com/dashboard/ai/prj_ri3cqx406ecmj96ka5ekpy277hx6/llm-detail/1/2c7dcb97ce0c4265
 
 ### Inspiration
 
 The inspiration for CreatorPage stemmed from the challenges creators face in connecting with sponsors due to trust issues and the need for transparent transactions. Existing video platforms like Twitch and Patreon usually operate retroactively, requiring creators to produce content before receiving support. These platforms also demand significant engineering resources as well. We envisioned a solution using Theta blockchain that allows creators to build portfolio pages and collect donations via smart contracts, ensuring immediate, secure transactions and automating content request responses.
 
-One limitation for supporters is that Patreon charges a service fee ranging from 5% to 12% of the creator’s earnings, plus payment processing fees. Additionally, payouts can take several days to process. Creators are dependent on Patreon’s policies and terms of service. Changes in these policies can negatively impact creators’ income and the way they interact with their supporters. Twitch takes a significant cut of revenue from subscriptions, Bits, and ads, often leaving creators with a smaller portion of their earnings. Additionally, the platform’s high competition makes it difficult for new creators to gain visibility. CreatorPage offers a more favorable revenue model by utilizing blockchain technology, allowing creators to keep a larger share of their earnings. The decentralized nature also helps reduce reliance on platform algorithms for visibility. Twitch has strict moderation policies and content restrictions that can result in bans or demonetization, sometimes unpredictably. Smart contracts enable a more transparent and consistent approach to moderation, reducing the risk of sudden bans or content takedowns.
+One limitation for supporters is that Patreon charges a service fee ranging from 5% to 12% of the creator’s earnings, plus payment processing fees. Additionally, payouts can take several days to process. Creators are dependent on Patreon’s policies and terms of service. Changes in these policies can negatively impact creators’ income and the way they interact with their supporters. Twitch takes a significant cut of revenue from subscriptions, Bits, and ads, often leaving creators with a smaller portion of their earnings. Additionally, the platform’s high competition makes it difficult for new creators to gain visibility. CreatorPage offers a more favorable revenue model by utilizing blockchain technology, allowing creators to keep a larger share of their earnings. Smart contracts also enable a more transparent and consistent approach to moderation, reducing the risk of sudden bans or content takedowns.
 
 ### How it works
 
@@ -121,10 +123,32 @@ The app should now be running on port 3000.
 
 ![Created](./img/created.png)
 
-## Smart Contract (page representation)
+## Creator page
+
+![Creator page](./img/creatorpage.png)
+
+## Making a video request
+
+![Donate](./img/donate.png)
+
+
+## Generating a script
+
+![Generate script](./img/script.png)
+
+## Smart Contract snippet (page representation)
 
 ![Contract](./img/contract1.png)
 
-## Smart Contract (making a request)
+## Smart Contract snippet (making a request)
 
 ![Contract](./img/contract2.png)
+
+## LLM interaction code snippet
+
+![Contract](./img/llm.png)
+
+## Main app contract (each interaction gets added as a transaction)
+https://testnet-explorer.thetatoken.org/address/0x13662e769FAaB0DD41890E37ABb2bD0539693D73
+
+![Contract](./img/contract.png)
