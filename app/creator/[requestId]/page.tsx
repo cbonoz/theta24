@@ -308,7 +308,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 									))}
 								</div>
 
-								{THETA_KEY && !isOwner && (
+								{THETA_KEY && isOwner && (
 									<div>
 										<hr />
 										<div className="text-2xl font-bold mt-4">
