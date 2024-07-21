@@ -345,42 +345,44 @@ export default function CreatorPage({ params }: { params: Params }) {
 												<div className="text-2xl font-bold">Add a new video request</div>
 											</AccordionTrigger>
 											<AccordionContent>
-												<div className="italic">
-													Video requests will be received by the creator via a smart contract
-													transaction.
+												<div className="p-2">
+													<div className="italic">
+														Video requests will be received by the creator via a smart contract
+														transaction.
+													</div>
+
+													<Textarea
+														className="w-full mt-2"
+														placeholder="Enter your message"
+														value={message}
+														onChange={(e) => setMessage(e.target.value)}
+													/>
+													<div className="text-sm text-gray-500">
+														Describe what video you would like this creator to make next!
+													</div>
+
+													{/* Donation */}
+													<Input
+														className="mt-4 max-w-xs"
+														type="number"
+														placeholder={`Donation in ${currency}`}
+														value={donation}
+														onChange={(e) => setDonation(Number(e.target.value))}
+													/>
+													<div className="text-sm text-gray-500">Donation in {currency}</div>
+
+													<Button
+														className="mt-4"
+														onClick={() => {
+															setSendLoading(true);
+															makeVideoRequest();
+														}}
+														disabled={sendLoading}
+													>
+														{sendLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+														Send request
+													</Button>
 												</div>
-
-												<Textarea
-													className="w-full mt-2"
-													placeholder="Enter your message"
-													value={message}
-													onChange={(e) => setMessage(e.target.value)}
-												/>
-												<div className="text-sm text-gray-500">
-													Describe what video you would like this creator to make next!
-												</div>
-
-												{/* Donation */}
-												<Input
-													className="mt-4 max-w-xs"
-													type="number"
-													placeholder={`Donation in ${currency}`}
-													value={donation}
-													onChange={(e) => setDonation(Number(e.target.value))}
-												/>
-												<div className="text-sm text-gray-500">Donation in {currency}</div>
-
-												<Button
-													className="mt-4"
-													onClick={() => {
-														setSendLoading(true);
-														makeVideoRequest();
-													}}
-													disabled={sendLoading}
-												>
-													{sendLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-													Send request
-												</Button>
 											</AccordionContent>
 										</AccordionItem>
 									</Accordion>
