@@ -16,7 +16,7 @@ const openai = new OpenAI({
 
 export const generateVideoRequestScript = async (videoRequest: string) => {
 	if (!videoRequest) {
-		throw new Error("No video request provided");
+		throw new Error("No video request prompt provided");
 	}
 
 	const prompt = `Pretend the following is a video concept: ${videoRequest}. Generate a short hypothetical script for this video.`;
