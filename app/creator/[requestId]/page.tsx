@@ -224,10 +224,8 @@ export default function CreatorPage({ params }: { params: Params }) {
 				>
 					{invalid && (
 						<div className="font-bold text-red-500">
-							<p>
-								This page may not exist or may be on another network, double check your currently
-								connected network.
-							</p>
+							This page may not exist or may be on another network, double check your currently
+							connected network.
 						</div>
 					)}
 
@@ -394,7 +392,7 @@ export default function CreatorPage({ params }: { params: Params }) {
 					{result && (
 						<div className="mt-4">
 							<h3 className="text-lg font-bold">Result</h3>
-							<p>{result}</p>
+							<div>{result}</div>
 						</div>
 					)}
 

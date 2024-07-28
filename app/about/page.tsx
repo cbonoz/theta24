@@ -31,7 +31,7 @@ const About = () => {
 				{siteConfig.about.map((section, index) => (
 					<div key={index} className="mt-4">
 						<h3 className="text-lg font-bold">{section.title}</h3>
-						<p>{section.description}</p>
+						<div>{section.description}</div>
 					</div>
 				))}
 
